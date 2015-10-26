@@ -1,0 +1,2 @@
+requires "DBD::mysql";
+requires "Test::More";
