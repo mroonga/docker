@@ -24,6 +24,7 @@ use Carp;
 use FindBin qw/$Bin/;
 use Getopt::Long qw/:config bundling no_ignore_case gnu_compat/;
 use Test::More;
+use Test::More::Color "foreground";
 use DBI;
 
 ### parse option.
