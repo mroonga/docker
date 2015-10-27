@@ -31,6 +31,7 @@ use DBI;
 my $opt= {quiet                => 1,
           no_cache             => 0,
           no_drop              => 0,
+          build_directory      => "$Bin/../Dockerfile",
           docker_command       => "docker"};
 
 while (my $optstr= shift)
@@ -62,7 +63,7 @@ while (my $optstr= shift)
 }
 
 
-foreach my $build_dir (glob "$Bin/../Dockerfile/*")
+foreach my $build_dir (glob $opt->{build_directory} . "/*")
 {
   subtest "Build and Test $build_dir" => sub
   {
