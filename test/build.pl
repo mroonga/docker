@@ -24,12 +24,14 @@ use Carp;
 use FindBin qw/$Bin/;
 use Getopt::Long qw/:config bundling no_ignore_case gnu_compat/;
 use Test::More;
+use Test::More::Color "foreground";
 use DBI;
 
 ### parse option.
 my $opt= {quiet                => 1,
           no_cache             => 0,
           no_drop              => 0,
+          build_directory      => "$Bin/../Dockerfile",
           docker_command       => "docker"};
 
 while (my $optstr= shift)
@@ -61,7 +63,7 @@ while (my $optstr= shift)
 }
 
 
-foreach my $build_dir (glob "$Bin/../Dockerfile/*")
+foreach my $build_dir (glob $opt->{build_directory} . "/*")
 {
   subtest "Build and Test $build_dir" => sub
   {
@@ -70,7 +72,7 @@ foreach my $build_dir (glob "$Bin/../Dockerfile/*")
     ok($docker->run, "Starting container and get ipaddr");
     ok($docker->connect_mysql, "Connecting MySQL in container");
     ok($docker->show_plugins, "SHOW PLUGINS");
-    is_deeply($docker->{version}, $docker->show_version, "Compare version from directory name");
+    is_deeply($docker->show_version, $docker->{version}, "Compare version from directory name");
     ok($docker->create_table, "CREATE TABLES without warning");
   };
 }
