@@ -1,0 +1,17 @@
+{
+  "mysql5623_mroonga410": {
+    "mysql"  : "5623",
+    "mroonga": "410",
+    "groonga": "411"
+  },
+  "mysql5626_mroonga506": {
+    "mysql"  : "5626",
+    "mroonga": "506",
+    "groonga": "506"
+  },
+  "mysql5627_mroonga508": {
+    "mysql"  : "5627",
+    "mroonga": "508",
+    "groonga": "508"
+  }
+}
