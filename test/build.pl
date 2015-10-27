@@ -71,7 +71,7 @@ foreach my $build_dir (glob "$Bin/../Dockerfile/*")
     ok($docker->run, "Starting container and get ipaddr");
     ok($docker->connect_mysql, "Connecting MySQL in container");
     ok($docker->show_plugins, "SHOW PLUGINS");
-    is_deeply($docker->{version}, $docker->show_version, "Compare version from directory name");
+    is_deeply($docker->show_version, $docker->{version}, "Compare version from directory name");
     ok($docker->create_table, "CREATE TABLES without warning");
   };
 }
