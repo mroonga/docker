@@ -32,7 +32,8 @@ my $opt= {quiet                => 1,
           no_cache             => 0,
           no_drop              => 0,
           build_directory      => "$Bin/../Dockerfile",
-          docker_command       => "docker"};
+          docker_command       => "docker",
+          version_json         => "$Bin/version.json"};
 
 while (my $optstr= shift)
 {
@@ -98,6 +99,8 @@ EOF
 
 package Test::Mroonga;
 
+use JSON;
+
 sub new
 {
   my ($class, $opt, $build_dir)= @_;
@@ -112,11 +115,9 @@ sub new
                            mroonga => undef}};
   bless $self => $class;
 
-  $build_dir =~ /(?<tag>mysql(?<mysql>\d+)_mroonga(?<mroonga>\d+))$/;
+  $build_dir =~ /(?<tag>mysql\d+_mroonga\d+)$/;
   $self->{tag}               = $+{tag};
-  $self->{version}->{mysql}  = $+{mysql};
-  $self->{version}->{groonga}= $+{mroonga};
-  $self->{version}->{mroonga}= $+{mroonga};
+  $self->read_version_from_json;
 
   ### Make an image
   return 0 unless $self->build;
@@ -170,6 +171,19 @@ sub run
   return 0 unless $container_ipaddr;
 
   $self->{container}= {id => $container_id, ipaddr => $container_ipaddr};
+}
+
+
+sub read_version_from_json
+{
+  my ($self)= @_;
+
+  open(my $fh, "< " . $self->{opt}->{version_json});
+  my @line= <$fh>;
+  close($fh);
+
+  my $json= from_json(join("\n", @line));
+  $self->{version}= $json->{$self->{tag}};
 }
 
 
