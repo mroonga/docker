@@ -1,6 +1,7 @@
 FROM centos:centos6.6
 MAINTAINER groonga
 
+RUN yum upgrade -y
 RUN yum install -y which
 RUN rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
 RUN rpm -ivh http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
