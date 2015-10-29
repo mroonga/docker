@@ -28,12 +28,13 @@ use Test::More::Color "foreground";
 use DBI;
 
 ### parse option.
-my $opt= {quiet                => 1,
-          no_cache             => 0,
-          no_drop              => 0,
-          build_directory      => "$Bin/../Dockerfile",
-          docker_command       => "docker",
-          version_json         => "$Bin/version.json"};
+my $opt= {quiet           => 1,
+          no_cache        => 0,
+          no_drop         => 0,
+          build_directory => "$Bin/../Dockerfile",
+          docker_command  => "docker",
+          tag             => undef,
+          version_json    => "$Bin/version.json"};
 
 while (my $optstr= shift)
 {
@@ -53,6 +54,10 @@ while (my $optstr= shift)
   {
     $opt->{docker_command}= "sudo " . $opt->{docker_command};
   }
+  elsif ($optstr eq "--tag")
+  {
+    $opt->{tag}= shift;
+  }
   elsif ($optstr eq "--help" || $optstr eq "-h")
   {
     &usage();
@@ -64,20 +69,17 @@ while (my $optstr= shift)
 }
 
 
-foreach my $build_dir (glob $opt->{build_directory} . "/*")
+if ($opt->{tag})
 {
-  subtest "Build and Test $build_dir" => sub
-  {
-    ok(my $docker= Test::Mroonga->new($opt, $build_dir), "Building image from $build_dir");
-    is($docker->author, "groonga", "MAINTAINER should be set 'groonga'");
-    ok($docker->run, "Starting container and get ipaddr");
-    ok($docker->connect_mysql, "Connecting MySQL in container");
-    ok($docker->show_plugins, "SHOW PLUGINS");
-    is_deeply($docker->show_version, $docker->{version}, "Compare version from directory name");
-    ok($docker->create_table, "CREATE TABLES without warning");
-  };
+  test_one_dockerfile($opt->{build_directory} . "/" . $opt->{tag});
 }
-
+else
+{
+  foreach my $build_dir (glob $opt->{build_directory} . "/*")
+  {
+    test_one_dockerfile($build_dir);
+  }
+}
 
 done_testing();
 
@@ -96,6 +98,22 @@ EOF
   exit 0;
 }
 
+
+sub test_one_dockerfile
+{
+  my ($build_dir)= @_;
+
+  subtest "Build and Test $build_dir" => sub
+  {
+    ok(my $docker= Test::Mroonga->new($opt, $build_dir), "Building image from $build_dir");
+    is($docker->author, "groonga", "MAINTAINER should be set 'groonga'");
+    ok($docker->run, "Starting container and get ipaddr");
+    ok($docker->connect_mysql, "Connecting MySQL in container");
+    ok($docker->show_plugins, "SHOW PLUGINS");
+    is_deeply($docker->show_version, $docker->{version}, "Compare version from directory name");
+    ok($docker->create_table, "CREATE TABLES without warning");
+  };
+}
 
 package Test::Mroonga;
 
