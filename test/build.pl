@@ -90,7 +90,7 @@ $0 [options]
     -h, --help   Display this message.
     -v           Verbose. Display "docker build"'s output into stdout.
     --no-cache   Don't use cache in "docker build" 
-    --no-drop    Don't cleanup containers and images using test.
+    --no-drop    Don't cleanup images created by this script.
     --sudo       Use "sudo" for "docker" command.
 EOF
   exit 0;
@@ -296,8 +296,6 @@ sub DESTROY
 {
   my ($self)= @_;
 
-  return 0 if $self->{opt}->{no_drop};
-
   ### remove container
   if ($self->{container}->{id})
   {
@@ -311,6 +309,8 @@ sub DESTROY
                                    $self->{container}->{id});
     system($docker_rm_command);
   }
+
+  return 0 if $self->{opt}->{no_drop};
 
   ### remove image
   my $docker_rmi_command= sprintf("%s rmi %s > /dev/null",
