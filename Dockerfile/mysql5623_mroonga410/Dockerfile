@@ -9,6 +9,8 @@ RUN yum install --enablerepo=mysql56-community --disablerepo=mysql57-community -
 RUN yum install -y mysql-community-mroonga-4.10 groonga-4.1.1 groonga-tokenizer-mecab-4.1.1
 COPY my.cnf /etc/my.cnf
 RUN service mysqld start && mysql -e "GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION" && mysql < /usr/share/mroonga/install.sql
+RUN rpm -q --scripts mysql-community-mroonga | sed -n '/^postinstall scriptlet/,/^[a-z][a-z]* scriptlet/p' | tail -n +2 | head -n -1 > /root/postinstall.sh
+COPY entrypoint.sh /root/entrypoint.sh
 
 EXPOSE 3306
-ENTRYPOINT /usr/sbin/mysqld --user=mysql
+ENTRYPOINT ["/root/entrypoint.sh"]

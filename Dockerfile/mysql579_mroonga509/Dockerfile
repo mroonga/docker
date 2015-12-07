@@ -10,6 +10,8 @@ RUN yum install -y mysql57-community-mroonga-5.09 groonga-5.0.9 groonga-tokenize
 RUN awk '/root@localhost/{print $NF}' /var/log/mysqld.log > /root/mysql_password
 COPY my.cnf /etc/my.cnf
 RUN service mysqld start && mysql -p$(cat /root/mysql_password) --connect-expired-password -e "ALTER USER user() IDENTIFIED BY ''; CREATE USER root@'%'; GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION"
+RUN rpm -q --scripts mysql57-community-mroonga | sed -n '/^postinstall scriptlet/,/^[a-z][a-z]* scriptlet/p' | tail -n +2 | head -n -1 > /root/postinstall.sh
+COPY entrypoint.sh /root/entrypoint.sh
 
 EXPOSE 3306
-ENTRYPOINT /usr/sbin/mysqld --user=mysql
+ENTRYPOINT ["/root/entrypoint.sh"]

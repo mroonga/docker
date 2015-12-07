@@ -22,7 +22,6 @@ use strict;
 use warnings;
 use Carp;
 use FindBin qw/$Bin/;
-use Getopt::Long qw/:config bundling no_ignore_case gnu_compat/;
 use Test::More;
 use Test::More::Color "foreground";
 use DBI;
@@ -103,21 +102,73 @@ sub test_one_dockerfile
 {
   my ($build_dir)= @_;
 
+  mkdir($Bin . "/data") unless -e ($Bin . "/data");
   subtest "Build and Test $build_dir" => sub
   {
     ok(my $docker= Test::Mroonga->new($opt, $build_dir), "Building image from $build_dir");
     is($docker->author, "groonga", "MAINTAINER should be set 'groonga'");
-    ok($docker->run, "Starting container and get ipaddr");
-    ok($docker->connect_mysql, "Connecting MySQL in container");
-    ok($docker->show_plugins, "SHOW PLUGINS");
-    is_deeply($docker->show_version, $docker->{version}, "Compare version from directory name");
-    ok($docker->create_table, "CREATE TABLES without warning");
+
+    subtest "Running without volume mount" => sub
+    {
+      ok($docker->run, "Starting container and get ipaddr");
+      ok($docker->connect_mysql, "Connecting MySQL in container");
+      ok($docker->show_plugins, "SHOW PLUGINS");
+      is_deeply($docker->show_version, $docker->{version}, "Compare version from directory name");
+      ok($docker->create_table, "CREATE TABLES without warning");
+      $docker->stop;
+    };
+
+    my $datadir= $Bin . "/data/" . $docker->{tag};
+    subtest "Running with volume mount" => sub
+    {
+      mkdir($datadir);
+      ok($docker->run_with_volume($datadir), "Starting container with volume and get ipaddr");
+      ok($docker->connect_mysql, "Connecting MySQL in container");
+      ok($docker->show_plugins, "SHOW PLUGINS");
+      is_deeply($docker->show_version, $docker->{version}, "Compare version from directory name");
+      ok($docker->create_table, "CREATE TABLES without warning");
+
+      $docker->stop;
+    };
+
+    subtest "Running with re-use mounted volume" => sub
+    {
+      ### TODO: 500.500 shouldn't be hard-coded
+      system("sudo chown -R 500.500 $datadir");
+      my $origowner= get_directory_owner($datadir);
+      ok($docker->run_with_volume($datadir), "Starting container with volume and get ipaddr");
+      ok($docker->connect_mysql, "Connecting MySQL in container");
+      ok($docker->_run_query("SHOW TABLES FROM test_mroonga"), "Exist table which has been created at last running");
+      $docker->stop;
+      ### TODO: 500.500 shouldn't be hard-coded
+      is_deeply([500, 500], get_directory_owner($datadir), "Restore mounted directorie's owner");
+    };
   };
+
+  system("rm -r $Bin/data");
 }
+
+
+sub get_directory_owner
+{
+  my ($directory)= @_;
+
+  my @stat= stat($directory);
+  my $origowner= $stat[4];
+  my $origgroup= $stat[5];
+
+  return [$origowner, $origgroup];
+}
+
 
 package Test::Mroonga;
 
+use strict;
+use warnings;
+
+use Test::More;
 use JSON;
+use FindBin qw/$Bin/;
 
 sub new
 {
@@ -180,6 +231,31 @@ sub run
   my $container_id= `$docker_run_command`;
   chomp($container_id);
   return 0 unless $container_id;
+  return 0 unless my $container_ipaddr= $self->get_container_ipaddr($container_id);
+
+  $self->{container}= {id => $container_id, ipaddr => $container_ipaddr};
+}
+
+
+sub run_with_volume
+{
+  my ($self, $datadir)= @_;
+
+  my $docker_run_command= sprintf("%s run -d -v %s:/var/lib/mysql %s",
+                                  $self->{opt}->{docker_command},
+                                  $datadir,
+                                  $self->{tag});
+  my $container_id= `$docker_run_command`;
+  chomp($container_id);
+  return 0 unless $container_id;
+  return 0 unless my $container_ipaddr= $self->get_container_ipaddr($container_id);
+  $self->{container}= {id => $container_id, ipaddr => $container_ipaddr};
+}
+
+
+sub get_container_ipaddr
+{
+  my ($self, $container_id)= @_;
 
   my $docker_inspect_command= sprintf("%s inspect -f '{{.NetworkSettings.IPAddress}}' %s", 
                                       $self->{opt}->{docker_command},
@@ -187,8 +263,6 @@ sub run
   my $container_ipaddr= `$docker_inspect_command`;
   chomp($container_ipaddr);
   return 0 unless $container_ipaddr;
-
-  $self->{container}= {id => $container_id, ipaddr => $container_ipaddr};
 }
 
 
@@ -219,12 +293,12 @@ sub connect_mysql
 
     eval
     {
-      $conn= DBI->connect($dsn, "root", "");
+      $conn= DBI->connect($dsn, "root", "", {PrintError => 0, RaiseError => 1});
     };
 
     if ($@)
     {
-      if ($n++ > 3)
+      if ($n++ > 9)
       {
         ### retry-out.
         return 0;
@@ -287,7 +361,7 @@ sub create_table
 {
   my ($self)= @_;
 
-  Test::More::subtest "Running queries" => sub 
+  subtest "Running queries" => sub 
   {
     $self->_run_query("CREATE DATABASE test_mroonga");
     $self->_run_query("CREATE TABLE test_mroonga.test (num serial, val varchar(32)) Engine= Mroonga");
@@ -304,15 +378,25 @@ sub _run_query
 {
   my ($self, $sql)= @_;
 
-  Test::More::ok($self->{conn}->do($sql), $sql);
-  Test::More::ok(!($self->{conn}->selectrow_hashref("SHOW WARNINGS")), "$sql has no warning");
+  ok($self->{conn}->do($sql), $sql);
+  ok(!($self->{conn}->selectrow_hashref("SHOW WARNINGS")), "$sql has no warning");
 }
 
 
-
-sub DESTROY
+sub stop
 {
   my ($self)= @_;
+
+  ### Shutdown mysqld(for restore mounted dir's owner)
+  if ($self->{container}->{ipaddr})
+  {
+    my $shutdown_cmd= sprintf("mysqladmin -uroot -h%s shutdown",
+                              $self->{container}->{ipaddr});
+    system($shutdown_cmd);
+
+    ### Wait for restoring owner.
+    sleep(3);
+  }
 
   ### remove container
   if ($self->{container}->{id})
@@ -326,8 +410,18 @@ sub DESTROY
                                    $self->{opt}->{docker_command},
                                    $self->{container}->{id});
     system($docker_rm_command);
+    $self->{container}= undef;
   }
 
+  return 1;
+}
+
+
+sub DESTROY
+{
+  my ($self)= @_;
+
+  $self->stop;
   return 0 if $self->{opt}->{no_drop};
 
   ### remove image
@@ -335,4 +429,9 @@ sub DESTROY
                                   $self->{opt}->{docker_command},
                                   $self->{tag});
   system($docker_rmi_command);
+
+  ### remove mounted directory.
+  my $datadir= $Bin . "/data/" . $self->{tag};
+  ### TODO: Do we need sudo?
+  system("sudo rm -r $datadir") if -e $datadir;
 }
