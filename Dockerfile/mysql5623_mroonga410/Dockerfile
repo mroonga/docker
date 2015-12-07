@@ -10,6 +10,7 @@ RUN yum install -y mysql-community-mroonga-4.10 groonga-4.1.1 groonga-tokenizer-
 COPY my.cnf /etc/my.cnf
 RUN service mysqld start && mysql -e "GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION" && mysql < /usr/share/mroonga/install.sql
 RUN rpm -q --scripts mysql-community-mroonga | sed -n '/^postinstall scriptlet/,/^[a-z][a-z]* scriptlet/p' | tail -n +2 | head -n -1 > /root/postinstall.sh
+RUN rm /var/lib/mysql/auto.cnf /var/lib/mysql/groonga.log
 COPY entrypoint.sh /root/entrypoint.sh
 
 EXPOSE 3306
