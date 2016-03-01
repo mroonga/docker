@@ -20,6 +20,7 @@
 
 use strict;
 use warnings;
+use POSIX;
 use Carp;
 use FindBin qw/$Bin/;
 use Test::More;
@@ -133,19 +134,21 @@ sub test_one_dockerfile
 
     subtest "Running with re-use mounted volume" => sub
     {
-      ### TODO: 500.500 shouldn't be hard-coded
-      system("sudo chown -R 500.500 $datadir");
+      my ($uid, $gid)= (getuid(), getgid());
+
+      ### TODO: Would not like depends on sudo..
+      system("sudo chown -R $uid.$gid $datadir");
       my $origowner= get_directory_owner($datadir);
       ok($docker->run_with_volume($datadir), "Starting container with volume and get ipaddr");
       ok($docker->connect_mysql, "Connecting MySQL in container");
       ok($docker->_run_query("SHOW TABLES FROM test_mroonga"), "Exist table which has been created at last running");
       $docker->stop;
-      ### TODO: 500.500 shouldn't be hard-coded
-      is_deeply([500, 500], get_directory_owner($datadir), "Restore mounted directorie's owner");
+      is_deeply([$uid, $gid], get_directory_owner($datadir), "Restore mounted directorie's owner");
     };
   };
 
-  system("rm -r $Bin/data");
+  ### TODO: Would not like depends on sudo..
+  system("sudo rm -r $Bin/data");
 }
 
 
