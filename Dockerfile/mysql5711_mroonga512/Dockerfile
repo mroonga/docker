@@ -5,7 +5,7 @@ RUN yum upgrade -y
 RUN yum install -y which
 RUN rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
 RUN rpm -ivh http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
-RUN yum install -y mysql-community-client-5.7.10 mysql-community-server-5.7.10
+RUN yum install -y mysql-community-client-5.7.11 mysql-community-server-5.7.11
 RUN yum install -y mysql57-community-mroonga-5.12 groonga-5.1.2 groonga-tokenizer-mecab-5.1.2
 RUN awk '/root@localhost/{print $NF}' /var/log/mysqld.log > /root/mysql_password
 COPY my.cnf /etc/my.cnf
