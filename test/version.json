@@ -34,6 +34,11 @@
     "mroonga": "512",
     "groonga": "512"
   },
+  "mysql5629_mroonga600": {
+    "mysql"  : "5629",
+    "mroonga": "600",
+    "groonga": "600"
+  },
   "mysql579_mroonga509": {
     "mysql"  : "579",
     "mroonga": "509",
