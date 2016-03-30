@@ -114,7 +114,7 @@ sub test_one_dockerfile
       ok($docker->run, "Starting container and get ipaddr");
       ok($docker->connect_mysql, "Connecting MySQL in container");
       ok($docker->show_plugins, "SHOW PLUGINS");
-      is_deeply($docker->show_version, $docker->{version}, "Compare version from directory name");
+      is_deeply($docker->show_version, $docker->{version}, "Compare version from version.json");
       ok($docker->create_table, "CREATE TABLES without warning");
       $docker->stop;
     };
@@ -126,7 +126,7 @@ sub test_one_dockerfile
       ok($docker->run_with_volume($datadir), "Starting container with volume and get ipaddr");
       ok($docker->connect_mysql, "Connecting MySQL in container");
       ok($docker->show_plugins, "SHOW PLUGINS");
-      is_deeply($docker->show_version, $docker->{version}, "Compare version from directory name");
+      is_deeply($docker->show_version, $docker->{version}, "Compare version from version.json");
       ok($docker->create_table, "CREATE TABLES without warning");
 
       $docker->stop;
