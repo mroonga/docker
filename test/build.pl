@@ -369,8 +369,8 @@ sub create_table
     $self->_run_query("CREATE DATABASE test_mroonga");
     $self->_run_query("CREATE TABLE test_mroonga.test (num serial, val varchar(32)) Engine= Mroonga");
     $self->_run_query("ALTER TABLE test_mroonga.test ADD FULLTEXT KEY (val)");
-    $self->_run_query("ALTER TABLE test_mroonga.test ADD FULLTEXT KEY (val) Comment 'parser \"TokenBigram\"'");
-    $self->_run_query("ALTER TABLE test_mroonga.test ADD FULLTEXT KEY (val) Comment 'parser \"TokenMecab\"'");
+    $self->_run_query("ALTER TABLE test_mroonga.test ADD FULLTEXT KEY (val) Comment 'tokenizer \"TokenBigram\"'");
+    $self->_run_query("ALTER TABLE test_mroonga.test ADD FULLTEXT KEY (val) Comment 'tokenizer \"TokenMecab\"'");
     $self->_run_query("ALTER TABLE test_mroonga.test ADD FULLTEXT KEY (val) Comment 'normalizer \"NormalizerAuto\"'");
     $self->_run_query("ALTER TABLE test_mroonga.test ADD FULLTEXT KEY (val) Comment 'normalizer \"NormalizerMySQLUnicodeCIExceptKanaCIKanaWithVoicedSoundMark\"'");
   }
