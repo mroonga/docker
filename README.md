@@ -52,6 +52,7 @@ Currently, groonga/mroonga provides these couples of versions.
 |mysql5711_mroonga600|5.7.11|6.00   |
 |mysql5711_mroonga601|5.7.11|6.01   |
 |mysql5712_mroonga602|5.7.12|6.02   |
+|mysql5712_mroonga603|5.7.12|6.03   |
 
 
 ## How to build Mroonga image
