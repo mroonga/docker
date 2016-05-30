@@ -33,7 +33,7 @@ Currently, groonga/mroonga provides these couples of versions.
 
 |tag                 |MySQL |Mroonga|
 |--------------------|------|-------|
-|latest              |5.6.30|6.02   |
+|latest              |5.6.30|6.03   |
 |mysql5623_mroonga410|5.6.23|4.10   |
 |mysql5626_mroonga506|5.6.26|5.06   |
 |mysql5627_mroonga508|5.6.27|5.08   |
@@ -44,6 +44,7 @@ Currently, groonga/mroonga provides these couples of versions.
 |mysql5629_mroonga600|5.6.29|6.00   |
 |mysql5629_mroonga601|5.6.29|6.01   |
 |mysql5630_mroonga602|5.6.30|6.02   |
+|mysql5630_mroonga603|5.6.30|6.03   |
 |mysql579_mroonga509 |5.7.9 |5.09   |
 |mysql5710_mroonga510|5.7.10|5.10   |
 |mysql5710_mroonga511|5.7.10|5.11   |
