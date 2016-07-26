@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 ########################################################################
-# Copyright (C) 2015  yoku0825
+# Copyright (C) 2015, 2016  yoku0825
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -26,6 +26,7 @@ use FindBin qw/$Bin/;
 use Test::More;
 use Test::More::Color "foreground";
 use DBI;
+use Parallel::ForkManager;
 
 ### parse option.
 my $opt= {quiet           => 1,
@@ -34,6 +35,7 @@ my $opt= {quiet           => 1,
           build_directory => "$Bin/../Dockerfile",
           docker_command  => "docker",
           tag             => undef,
+          prepare         => 0,
           version_json    => "$Bin/version.json"};
 
 while (my $optstr= shift)
@@ -62,22 +64,41 @@ while (my $optstr= shift)
   {
     &usage();
   }
+  elsif ($optstr eq "--prepare")
+  {
+    $opt->{prepare}= `grep "^processor" /proc/cpuinfo | tail -1 | awk '{print \$3 + 1}'`;
+  }
   else
   {
     die("invalid argument");
   }
 }
 
-
-if ($opt->{tag})
+if ($opt->{prepare})
 {
-  test_one_dockerfile($opt->{build_directory} . "/" . $opt->{tag});
+  $opt->{no_drop}= 1;
+
+  my $pm= Parallel::ForkManager->new($opt->{prepare});
+  foreach my $build_dir (glob $opt->{build_directory} . "/*")
+  {
+    $pm->start and next;
+    ok(my $docker= Test::Mroonga->new($opt, $build_dir), "Building image from $build_dir");
+    $pm->finish;
+  }
+  $pm->wait_all_children;
 }
 else
 {
-  foreach my $build_dir (glob $opt->{build_directory} . "/*")
+  if ($opt->{tag})
   {
-    test_one_dockerfile($build_dir);
+    test_one_dockerfile($opt->{build_directory} . "/" . $opt->{tag});
+  }
+  else
+  {
+    foreach my $build_dir (glob $opt->{build_directory} . "/*")
+    {
+      test_one_dockerfile($build_dir);
+    }
   }
 }
 
