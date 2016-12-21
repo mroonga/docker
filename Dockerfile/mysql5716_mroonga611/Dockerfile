@@ -3,8 +3,8 @@ MAINTAINER groonga
 
 RUN yum upgrade -y
 RUN yum install -y which epel-release
-RUN yum install -y http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
-RUN yum install -y http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
+RUN rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
+RUN rpm -ivh http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
 RUN yum install -y mysql-community-client-5.7.16 mysql-community-server-5.7.16 && yum clean all
 RUN yum install -y mysql57-community-mroonga-6.11 groonga-6.1.1 groonga-tokenizer-mecab-6.1.1 && yum clean all
 RUN awk '/root@localhost/{print $NF}' /var/log/mysqld.log > /root/mysql_password
