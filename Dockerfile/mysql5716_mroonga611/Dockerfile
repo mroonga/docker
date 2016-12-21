@@ -2,7 +2,7 @@ FROM centos:centos6.6
 MAINTAINER groonga
 
 RUN yum upgrade -y
-RUN yum install -y which epel-release
+RUN yum install -y which
 RUN yum install -y http://packages.groonga.org/centos/groonga-release-1.2.0-1.noarch.rpm
 RUN yum install -y http://dev.mysql.com/get/mysql57-community-release-el6-9.noarch.rpm
 RUN yum install -y mysql-community-client-5.7.16 mysql-community-server-5.7.16 && yum clean all
