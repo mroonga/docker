@@ -5,8 +5,8 @@ RUN yum upgrade -y
 RUN yum install -y which
 RUN rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
 RUN rpm -ivh http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
-RUN yum install -y mysql-community-client-5.7.11 mysql-community-server-5.7.11
-RUN yum install -y mysql57-community-mroonga-6.00 groonga-6.0.0 groonga-tokenizer-mecab-6.0.0
+RUN yum install -y mysql-community-client-5.7.11 mysql-community-server-5.7.11 && yum clean all
+RUN yum install -y mysql57-community-mroonga-6.00 groonga-6.0.0 groonga-tokenizer-mecab-6.0.0 groonga-normalizer-mysql && yum clean all
 RUN awk '/root@localhost/{print $NF}' /var/log/mysqld.log > /root/mysql_password
 COPY my.cnf /etc/my.cnf
 RUN service mysqld start && mysql -p$(cat /root/mysql_password) --connect-expired-password -e "ALTER USER user() IDENTIFIED BY ''; CREATE USER root@'%'; GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION"
