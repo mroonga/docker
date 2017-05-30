@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 ########################################################################
-# Copyright (C) 2015, 2016  yoku0825
+# Copyright (C) 2015, 2017  yoku0825
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -33,7 +33,7 @@ my $opt= {quiet           => 1,
           no_cache        => 0,
           no_drop         => 0,
           build_directory => "$Bin/../Dockerfile",
-          docker_command  => "docker",
+          docker_command  => "sudo docker",
           tag             => undef,
           prepare         => 0,
           version_json    => "$Bin/version.json"};
@@ -51,10 +51,6 @@ while (my $optstr= shift)
   elsif ($optstr eq "--no-drop")
   {
     $opt->{no_drop}= 1;
-  }
-  elsif ($optstr eq "--sudo")
-  {
-    $opt->{docker_command}= "sudo " . $opt->{docker_command};
   }
   elsif ($optstr eq "--tag")
   {
