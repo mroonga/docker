@@ -1,11 +1,11 @@
 #!/bin/bash
 
 if [ ! -e /var/lib/mysql/ibdata1 ] ; then
-  chown -R mysql. /var/lib/mysql
-  rm /var/log/mysqld.log
+  rm -r /var/lib/mysql/*
+  mysqld --no-defaults --initialize-insecure --basedir=/usr --datadir=/var/lib/mysql --user=mysql
   bash /root/postinstall.sh
-  awk '/root@localhost/{print $NF}' /var/log/mysqld.log > /root/mysql_password
-  service mysqld start && mysql -p$(cat /root/mysql_password) --connect-expired-password -e "ALTER USER user() IDENTIFIED BY ''; CREATE USER root@'%'; GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION" && service mysqld stop
+  service mysqld start && mysql -e "CREATE USER root@'%'; GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION" && service mysqld stop
+  rm /var/lib/mysql/auto.cnf /var/lib/mysql/groonga.log
 fi
 
 oldowner=$(ls -ln /var/lib/mysql/ibdata1 | awk '{print $3}')
