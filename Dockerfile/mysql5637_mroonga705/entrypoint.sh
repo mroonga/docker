@@ -1,11 +1,9 @@
 #!/bin/bash
 
 if [ ! -e /var/lib/mysql/ibdata1 ] ; then
-  rm -r /var/lib/mysql/*
-  mysqld --no-defaults --initialize-insecure --basedir=/usr --datadir=/var/lib/mysql --user=mysql
+  chown -R mysql. /var/lib/mysql
   bash /root/postinstall.sh
-  service mysqld start && mysql -e "CREATE USER root@'%'; GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION" && service mysqld stop
-  rm /var/lib/mysql/auto.cnf /var/lib/mysql/groonga.log
+  service mysqld start && mysql -e "GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION" && service mysqld stop
 fi
 
 oldowner=$(ls -ln /var/lib/mysql/ibdata1 | awk '{print $3}')
