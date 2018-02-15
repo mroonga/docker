@@ -33,7 +33,7 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                  | MySQL  | Mroonga | Groonga |
 |----------------------|--------|---------|---------|
-| latest               | 5.6.39 | 7.11    | 7.1.1   |
+| latest               | 5.6.39 | 8.00    | 8.0.0   |
 | mysql5623_mroonga410 | 5.6.23 | 4.10    | 4.1.1   |
 | mysql5626_mroonga506 | 5.6.26 | 5.06    | 5.0.6   |
 | mysql5627_mroonga508 | 5.6.27 | 5.08    | 5.0.8   |
@@ -65,6 +65,7 @@ Currently, groonga/mroonga provides these couples of versions.
 | mysql5638_mroonga709 | 5.6.38 | 7.09    | 7.0.9   |
 | mysql5638_mroonga710 | 5.6.38 | 7.10    | 7.1.0   |
 | mysql5639_mroonga711 | 5.6.39 | 7.11    | 7.1.1   |
+| mysql5639_mroonga800 | 5.6.39 | 8.00    | 8.0.0   |
 | mysql579_mroonga509  | 5.7.9  | 5.09    | 5.0.9   |
 | mysql5710_mroonga510 | 5.7.10 | 5.10    | 5.1.0   |
 | mysql5710_mroonga511 | 5.7.10 | 5.11    | 5.1.1   |
@@ -93,6 +94,7 @@ Currently, groonga/mroonga provides these couples of versions.
 | mysql5720_mroonga709 | 5.7.20 | 7.09    | 7.0.9   |
 | mysql5720_mroonga710 | 5.7.20 | 7.10    | 7.1.0   |
 | mysql5721_mroonga711 | 5.7.21 | 7.11    | 7.1.1   |
+| mysql5721_mroonga800 | 5.7.21 | 8.00    | 8.0.0   |
 
 
 ## How to build Mroonga image
