@@ -154,6 +154,11 @@
     "mroonga": "711",
     "groonga": "711"
   },
+  "mysql5639_mroonga800": {
+    "mysql"  : "5639",
+    "mroonga": "800",
+    "groonga": "800"
+  },
   "mysql579_mroonga509": {
     "mysql"  : "579",
     "mroonga": "509",
@@ -293,5 +298,10 @@
     "mysql"  : "5721",
     "mroonga": "711",
     "groonga": "711"
+  },
+  "mysql5721_mroonga800": {
+    "mysql"  : "5721",
+    "mroonga": "800",
+    "groonga": "800"
   }
 }
