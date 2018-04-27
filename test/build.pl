@@ -87,7 +87,20 @@ else
 {
   if ($opt->{tag})
   {
-    test_one_dockerfile($opt->{build_directory} . "/" . $opt->{tag});
+    my $path= sprintf("%s/%s", $opt->{build_directory}, $opt->{tag});
+    if (-d $path)
+    {
+      ### Specific only one tag
+      test_one_dockerfile($path);
+    }
+    else
+    {
+      ### Expand wildcard
+      foreach (glob($path))
+      {
+        test_one_dockerfile($_);
+      }
+    }
   }
   else
   {
