@@ -3,9 +3,9 @@ MAINTAINER groonga
 
 RUN yum upgrade -y && yum clean all
 RUN yum install -y which && yum clean all
-RUN yum install -y http://packages.groonga.org/centos/groonga-release-1.3.0-1.noarch.rpm && yum clean all
-RUN yum install -y http://dev.mysql.com/get/mysql57-community-release-el6-11.noarch.rpm && yum clean all
-RUN yum install -y mysql-community-client-5.7.22 mysql-community-server-5.7.22 && yum clean all
+RUN yum install -y http://packages.groonga.org/centos/groonga-release-1.4.0-1.noarch.rpm && yum clean all
+RUN yum install -y https://dev.mysql.com/get/mysql80-community-release-el6-1.noarch.rpm && yum clean all
+RUN yum install --enablerepo=mysql57-community --disablerepo=mysql80-community -y mysql-community-client-5.7.22 mysql-community-server-5.7.22 && yum clean all
 RUN mysqld --no-defaults --initialize-insecure --basedir=/usr --datadir=/var/lib/mysql --user=mysql
 RUN yum install -y mysql57-community-mroonga-8.03 groonga-8.0.3 groonga-tokenizer-mecab-8.0.3 groonga-normalizer-mysql && yum clean all
 COPY my.cnf /etc/my.cnf
