@@ -1,0 +1,13 @@
+notifications:
+  webhooks:
+    - https://webhook.commit-email.info/
+dist: xenial
+language: perl
+perl:
+  - 5.28
+services:
+  - docker
+install:
+  - (cd test && cpanm --quiet --installdeps --notest .)
+script:
+  - (cd test && perl build.pl)
