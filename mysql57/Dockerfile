@@ -6,7 +6,9 @@ RUN yum install -y which \
                    http://packages.groonga.org/centos/groonga-release-latest.noarch.rpm \
                    http://dev.mysql.com/get/mysql80-community-release-el6-1.noarch.rpm && yum clean all
 
-ENV groonga_version=9.0.0 mroonga_version=9.00 mysql_version=5.7.25
+ENV groonga_version=9.0.0 \
+    mroonga_version=9.00 \
+    mysql_version=5.7.25
 
 RUN yum install --disablerepo=mysql56-community \
                 --enablerepo=mysql57-community \
@@ -21,7 +23,7 @@ RUN yum install -y mysql57-community-mroonga-${mroonga_version} \
                    groonga-${groonga_version} \
                    groonga-tokenizer-mecab-${groonga_version} \
                    groonga-normalizer-mysql && yum clean all
-RUN chown -R mysql. /var/lib/mysql \
+RUN chown -R mysql. /var/lib/mysql && \
       service mysqld start && \
       mysql -e "CREATE USER root@'%'; GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION" && \
       mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql && \
