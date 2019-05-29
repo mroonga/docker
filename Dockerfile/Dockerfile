@@ -6,7 +6,7 @@ RUN yum install -y which \
                    http://packages.groonga.org/centos/groonga-release-latest.noarch.rpm \
                    http://dev.mysql.com/get/mysql57-community-release-el6-9.noarch.rpm && yum clean all
 
-ENV groonga_version=7.0.2 mroonga_version=7.02 mysql_version=5.6.36
+ENV groonga_version=7.0.3 mroonga_version=7.03 mysql_version=5.6.36
 
 RUN yum install --enablerepo=mysql56-community --disablerepo=mysql57-community -y \
                 mysql-community-client-${mysql_version} \
