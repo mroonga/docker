@@ -1,5 +1,0 @@
-requires "DBD::mysql";
-requires "Test::More";
-requires "Test::More::Color";
-requires "JSON";
-requires "Parallel::ForkManager";
