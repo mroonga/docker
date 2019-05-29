@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu
+
 if [ $# != 1 ]; then
   echo "Usage: $0 CONTEXT"
   echo " e.g.: $0 mysql57"
@@ -32,8 +34,10 @@ mysql_e="mysql -h 127.0.0.1 -P 33061 -uroot -sse"
  $mysql_e "SHOW VARIABLES LIKE 'mroonga_version'"; \
  $mysql_e "SHOW VARIABLES LIKE 'version'") \
   > /tmp/actual.txt
+set +e
 diff -u /tmp/expected.txt /tmp/actual.txt
 success=$?
+set -e
 sudo docker stop $container_name
 sudo docker logs $container_name
 sudo docker rm $container_name
