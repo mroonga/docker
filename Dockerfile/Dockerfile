@@ -4,11 +4,14 @@ MAINTAINER groonga
 RUN yum upgrade -y && yum clean all
 RUN yum install -y which \
                    http://packages.groonga.org/centos/groonga-release-latest.noarch.rpm \
-                   http://dev.mysql.com/get/mysql57-community-release-el6-11.noarch.rpm && yum clean all
+                   http://dev.mysql.com/get/mysql80-community-release-el6-1.noarch.rpm && yum clean all
 
-ENV groonga_version=8.0.2 mroonga_version=8.02 mysql_version=5.6.40
+ENV groonga_version=8.0.3 mroonga_version=8.03 mysql_version=5.6.40
 
-RUN yum install --enablerepo=mysql56-community --disablerepo=mysql57-community -y \
+RUN yum install --enablerepo=mysql56-community \
+                --disablerepo=mysql57-community \
+                --disablerepo=mysql80-community \
+                -y \
                 mysql-community-client-${mysql_version} \
                 mysql-community-server-${mysql_version} && yum clean all
 RUN yum install -y mysql-community-mroonga-${mroonga_version} \
