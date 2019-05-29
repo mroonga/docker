@@ -6,10 +6,13 @@ if [ ! -e /var/lib/mysql/ibdata1 ] ; then
   [[ -e /etc/my.cnf ]] && mv -n /etc/my.cnf /etc/my.cnf.save
 
   chown -R mysql: /var/lib/mysql
-  service mysqld start
+  mysql-systemd-start pre
+  /usr/sbin/mysqld --basedir=/usr --user=mysql &
+  mysql-systemd-start post
   mysql -e "GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION"
   mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
-  service mysqld stop
+  mysql < /usr/share/mroonga/install.sql
+  mysqladmin shutdown
 
   ### Restore my.cnf
   [[ -e /etc/my.cnf.save ]] && mv /etc/my.cnf.save /etc/my.cnf

@@ -5,13 +5,18 @@ if [ ! -e /var/lib/mysql/ibdata1 ] ; then
   ### See https://github.com/mroonga/docker/issues/59
   [[ -e /etc/my.cnf ]] && mv -n /etc/my.cnf /etc/my.cnf.save
   rm -r /var/lib/mysql/*
-  mysqld --no-defaults --initialize-insecure --basedir=/usr --datadir=/var/lib/mysql --user=mysql
+  mysqld \
+    --no-defaults \
+    --initialize-insecure \
+    --basedir=/usr \
+    --datadir=/var/lib/mysql \
+    --user=mysql
   chown -R mysql: /var/lib/mysql
-  bash /root/postinstall.sh
-  service mysqld start
+  /usr/sbin/mysqld --user=mysql --daemonize
   mysql -e "CREATE USER root@'%'; GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION"
   mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
-  service mysqld stop
+  mysql < /usr/share/mroonga/install.sql
+  mysqladmin shutdown
   ### Restore my.cnf
   [[ -e /etc/my.cnf.save ]] && mv /etc/my.cnf.save /etc/my.cnf
   rm /var/lib/mysql/auto.cnf /var/lib/mysql/groonga.log
