@@ -1,5 +1,8 @@
 #!/bin/bash
 
+original_owner=$(stat --format=%u /var/lib/mysql)
+original_group=$(stat --format=%g /var/lib/mysql)
+
 if [ ! -e /var/lib/mysql/ibdata1 ] ; then
   ### If overroded my.cnf is there, rename and restore it.
   ### See https://github.com/mroonga/docker/issues/59
@@ -22,10 +25,7 @@ if [ ! -e /var/lib/mysql/ibdata1 ] ; then
   rm /var/lib/mysql/auto.cnf /var/lib/mysql/groonga.log
 fi
 
-oldowner=$(ls -ln /var/lib/mysql/ibdata1 | awk '{print $3}')
-oldgroup=$(ls -ln /var/lib/mysql/ibdata1 | awk '{print $4}')
-
 chown -R mysql: /var/lib/mysql
 /usr/sbin/mysqld --user=mysql "$@"
 
-chown -R $oldowner:$oldgroup /var/lib/mysql
+chown -R $original_owner:$original_group /var/lib/mysql
