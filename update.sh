@@ -20,7 +20,7 @@ fi
 
 case $mysql_version in
   5.6*)
-    docker_file=mysql57/Dockerfile
+    docker_file=mysql56/Dockerfile
     ;;
   5.7*)
     docker_file=mysql57/Dockerfile
