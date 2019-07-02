@@ -19,11 +19,14 @@ else
 fi
 
 case $mysql_version in
-  5.6*)
+  5.6.*)
     docker_file=mysql56/Dockerfile
     ;;
-  5.7*)
+  5.7.*)
     docker_file=mysql57/Dockerfile
+    ;;
+  8.0.*)
+    docker_file=mysql80/Dockerfile
     ;;
 esac
 

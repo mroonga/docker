@@ -123,6 +123,12 @@ Currently, groonga/mroonga provides these couples of versions.
 | mysql5626\_mroonga506 | 5.6.26 | 5.06    | 5.0.6   |
 | mysql5623\_mroonga410 | 5.6.23 | 4.10    | 4.1.1   |
 
+### For MySQL 8.0
+
+| tag                   | MySQL  | Mroonga | Groonga |
+|-----------------------|--------|---------|---------|
+| mysql8016\_mroonga904 | 8.0.16 | 9.04    | 9.0.4   |
+
 ## How to build Mroonga image
 
 * Dockerfile for some couples of MySQL and Mroonga are under "Dockerfile" directory.
