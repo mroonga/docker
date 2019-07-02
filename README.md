@@ -35,7 +35,8 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                   | MySQL  | Mroonga | Groonga |
 |-----------------------|--------|---------|---------|
-| latest                | 5.7.26 | 9.03    | 9.0.3   |
+| latest                | 5.7.26 | 9.04    | 9.0.4   |
+| mysql5726\_mroonga904 | 5.7.26 | 9.04    | 9.0.4   |
 | mysql5726\_mroonga903 | 5.7.26 | 9.03    | 9.0.3   |
 | mysql5726\_mroonga901 | 5.7.26 | 9.01    | 9.0.2   |
 | mysql5725\_mroonga900 | 5.7.25 | 9.00    | 9.0.0   |
@@ -79,6 +80,7 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                   | MySQL  | Mroonga | Groonga |
 |-----------------------|--------|---------|---------|
+| mysql5644\_mroonga904 | 5.6.44 | 9.04    | 9.0.4   |
 | mysql5644\_mroonga903 | 5.6.44 | 9.03    | 9.0.3   |
 | mysql5644\_mroonga901 | 5.6.44 | 9.01    | 9.0.2   |
 | mysql5643\_mroonga900 | 5.6.43 | 9.00    | 9.0.0   |
@@ -125,22 +127,29 @@ Currently, groonga/mroonga provides these couples of versions.
 
 * Dockerfile for some couples of MySQL and Mroonga are under "Dockerfile" directory.
 
-```
+```shell
 $ git clone https://github.com/mroonga/docker mroonga_docker
 $ cd mroonga_docker
-$ sudo docker build -t mroonga_docker Dockerfile/mysql5627_mroonga508
+$ sudo docker build -t mysql56-mroonga mysql56
+$ sudo docker build -t mysql57-mroonga mysql57
 ```
 
-## How to create test environment
+## How to test
 
-* If you doesn't run `docker` command without sudo, add "--sudo" option for script.
-* Test script is written by Perl5. You should install `cpanm`.
-
-```
+```shell
 $ git clone https://github.com/mroonga/docker mroonga_docker
-$ cd mroonga_docker/test
-$ cpanm --installdeps .
-$ ./build.pl
+$ cd mroonga_docker
+$ test/build.sh mysql56
+$ test/build.sh mysql57
+```
+
+## How to release
+
+```shell
+$ ./update.sh ${MYSQL_VERSION} ${MROONGA_VERSION} ${GROONGA_VERSION}
+(./update.sh 5.7.26 9.04 9.0.4)
+$ git push
+$ git push --tags
 ```
 
 ## Contribution
