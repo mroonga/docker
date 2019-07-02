@@ -15,3 +15,6 @@ matrix:
     - name: "MySQL 5.7"
       script:
         - test/build.sh mysql57
+    - name: "MySQL 8.0"
+      script:
+        - test/build.sh mysql80
