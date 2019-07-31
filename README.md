@@ -35,7 +35,8 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                   | MySQL  | Mroonga | Groonga |
 |-----------------------|--------|---------|---------|
-| latest                | 5.7.26 | 9.04    | 9.0.4   |
+| latest                | 5.7.27 | 9.05    | 9.0.5   |
+| mysql5727\_mroonga905 | 5.7.27 | 9.05    | 9.0.5   |
 | mysql5726\_mroonga904 | 5.7.26 | 9.04    | 9.0.4   |
 | mysql5726\_mroonga903 | 5.7.26 | 9.03    | 9.0.3   |
 | mysql5726\_mroonga901 | 5.7.26 | 9.01    | 9.0.2   |
@@ -80,6 +81,8 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                   | MySQL  | Mroonga | Groonga |
 |-----------------------|--------|---------|---------|
+| mysql56-latest        | 5.6.45 | 9.05    | 9.0.5   |
+| mysql5645\_mroonga905 | 5.6.45 | 9.05    | 9.0.5   |
 | mysql5644\_mroonga904 | 5.6.44 | 9.04    | 9.0.4   |
 | mysql5644\_mroonga903 | 5.6.44 | 9.03    | 9.0.3   |
 | mysql5644\_mroonga901 | 5.6.44 | 9.01    | 9.0.2   |
@@ -127,6 +130,8 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                   | MySQL  | Mroonga | Groonga |
 |-----------------------|--------|---------|---------|
+| mysql80-latest        | 8.0.17 | 9.05    | 9.0.5   |
+| mysql8017\_mroonga905 | 8.0.17 | 9.05    | 9.0.5   |
 | mysql8016\_mroonga904 | 8.0.16 | 9.04    | 9.0.4   |
 
 ## How to build Mroonga image
@@ -138,6 +143,7 @@ $ git clone https://github.com/mroonga/docker mroonga_docker
 $ cd mroonga_docker
 $ sudo docker build -t mysql56-mroonga mysql56
 $ sudo docker build -t mysql57-mroonga mysql57
+$ sudo docker build -t mysql80-mroonga mysql80
 ```
 
 ## How to test
@@ -147,6 +153,7 @@ $ git clone https://github.com/mroonga/docker mroonga_docker
 $ cd mroonga_docker
 $ test/build.sh mysql56
 $ test/build.sh mysql57
+$ test/build.sh mysql80
 ```
 
 ## How to release
