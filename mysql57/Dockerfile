@@ -8,7 +8,7 @@ RUN yum upgrade -y && \
       http://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm && \
     yum clean all
 
-ENV groonga_version=9.0.5 \
+ENV groonga_version=9.0.6 \
     mroonga_version=9.05 \
     mysql_version=5.7.27
 
