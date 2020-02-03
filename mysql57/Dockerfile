@@ -8,9 +8,9 @@ RUN yum upgrade -y && \
       http://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm && \
     yum clean all
 
-ENV groonga_version=9.0.9 \
-    mroonga_version=9.09 \
-    mysql_version=5.7.28
+ENV groonga_version=9.1.2 \
+    mroonga_version=9.12 \
+    mysql_version=5.7.29
 
 RUN yum install -y \
       --disablerepo=mysql56-community \
