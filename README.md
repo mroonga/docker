@@ -35,7 +35,8 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                   | MySQL  | Mroonga | Groonga |
 |-----------------------|--------|---------|---------|
-| latest                | 5.7.28 | 9.09    | 9.0.9   |
+| latest                | 5.7.29 | 9.12    | 9.1.2   |
+| mysql5729\_mroonga912 | 5.7.29 | 9.12    | 9.1.2   |
 | mysql5728\_mroonga909 | 5.7.28 | 9.09    | 9.0.9   |
 | mysql5727\_mroonga907 | 5.7.27 | 9.07    | 9.0.7   |
 | mysql5727\_mroonga905 | 5.7.27 | 9.05    | 9.0.5   |
@@ -83,7 +84,8 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                   | MySQL  | Mroonga | Groonga |
 |-----------------------|--------|---------|---------|
-| mysql56-latest        | 5.6.45 | 9.09    | 9.0.9   |
+| mysql56-latest        | 5.6.47 | 9.12    | 9.1.2   |
+| mysql5647\_mroonga912 | 5.6.47 | 9.12    | 9.1.2   |
 | mysql5646\_mroonga909 | 5.6.46 | 9.09    | 9.0.9   |
 | mysql5645\_mroonga907 | 5.6.45 | 9.07    | 9.0.7   |
 | mysql5645\_mroonga905 | 5.6.45 | 9.05    | 9.0.5   |
@@ -134,7 +136,8 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                   | MySQL  | Mroonga | Groonga |
 |-----------------------|--------|---------|---------|
-| mysql80-latest        | 8.0.18 | 9.09    | 9.0.9   |
+| mysql80-latest        | 8.0.19 | 9.12    | 9.1.2   |
+| mysql8019\_mroonga912 | 8.0.18 | 9.09    | 9.0.9   |
 | mysql8018\_mroonga909 | 8.0.18 | 9.09    | 9.0.9   |
 | mysql8017\_mroonga907 | 8.0.17 | 9.07    | 9.0.7   |
 | mysql8017\_mroonga905 | 8.0.17 | 9.05    | 9.0.5   |
