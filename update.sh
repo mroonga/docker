@@ -37,10 +37,13 @@ ${SED} \
   -e "s/mroonga_version=[0-9.]*/mroonga_version=${mroonga_version}/g" \
   -e "s/groonga_version=[0-9.]*/groonga_version=${groonga_version}/g" \
   ${docker_file}
+git add ${docker_file}
+
+ruby "$(dirname "$0")/update-tag-list.rb" "$@"
+git add README.md
 
 tag=$(echo "mysql${mysql_version}_mroonga${mroonga_version}" | \
         ${SED} -r -e 's/[.]//g')
-git add ${docker_file}
 message="MySQL ${mysql_version} and Mroonga ${mroonga_version}"
 git commit -m "${message}"
 git tag -a -m "${message}" ${tag}
