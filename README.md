@@ -140,7 +140,8 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                    | MySQL  | Mroonga | Groonga |
 |------------------------|--------|---------|---------|
-| mysql80-latest         | 8.0.19 | 10.01   | 10.0.1  |
+| mysql80-latest         | 8.0.22 | 10.10   | 10.1.0  |
+| mysql8022\_mroonga1010 | 8.0.22 | 10.10   | 10.1.0  |
 | mysql8019\_mroonga1001 | 8.0.19 | 10.01   | 10.0.1  |
 | mysql8019\_mroonga912  | 8.0.18 | 9.12    | 9.1.2   |
 | mysql8018\_mroonga909  | 8.0.18 | 9.09    | 9.0.9   |
