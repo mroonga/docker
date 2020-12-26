@@ -85,7 +85,8 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                    | MySQL  | Mroonga | Groonga |
 |------------------------|--------|---------|---------|
-| mysql56-latest         | 5.6.47 | 10.01   | 10.0.1  |
+| mysql56-latest         | 5.6.50 | 10.10   | 10.1.0  |
+| mysql5650\_mroonga1010 | 5.6.50 | 10.10   | 10.1.0  |
 | mysql5647\_mroonga1001 | 5.6.47 | 10.01   | 10.0.1  |
 | mysql5647\_mroonga912  | 5.6.47 | 9.12    | 9.1.2   |
 | mysql5646\_mroonga909  | 5.6.46 | 9.09    | 9.0.9   |
