@@ -83,7 +83,22 @@ Currently, groonga/mroonga provides these couples of versions.
 | mysql5710\_mroonga510  | 5.7.10 | 5.10    | 5.1.0   |
 | mysql579\_mroonga509   | 5.7.9  | 5.09    | 5.0.9   |
 
+### For MySQL 8.0
+
+| tag                    | MySQL  | Mroonga | Groonga |
+|------------------------|--------|---------|---------|
+| mysql80-latest         | 8.0.22 | 10.10   | 10.1.0  |
+| mysql8022\_mroonga1010 | 8.0.22 | 10.10   | 10.1.0  |
+| mysql8019\_mroonga1001 | 8.0.19 | 10.01   | 10.0.1  |
+| mysql8019\_mroonga912  | 8.0.18 | 9.12    | 9.1.2   |
+| mysql8018\_mroonga909  | 8.0.18 | 9.09    | 9.0.9   |
+| mysql8017\_mroonga907  | 8.0.17 | 9.07    | 9.0.7   |
+| mysql8017\_mroonga905  | 8.0.17 | 9.05    | 9.0.5   |
+| mysql8016\_mroonga904  | 8.0.16 | 9.04    | 9.0.4   |
+
 ### For MySQL 5.6
+
+EOL
 
 | tag                    | MySQL  | Mroonga | Groonga |
 |------------------------|--------|---------|---------|
@@ -137,19 +152,6 @@ Currently, groonga/mroonga provides these couples of versions.
 | mysql5626\_mroonga506  | 5.6.26 | 5.06    | 5.0.6   |
 | mysql5623\_mroonga410  | 5.6.23 | 4.10    | 4.1.1   |
 
-### For MySQL 8.0
-
-| tag                    | MySQL  | Mroonga | Groonga |
-|------------------------|--------|---------|---------|
-| mysql80-latest         | 8.0.22 | 10.10   | 10.1.0  |
-| mysql8022\_mroonga1010 | 8.0.22 | 10.10   | 10.1.0  |
-| mysql8019\_mroonga1001 | 8.0.19 | 10.01   | 10.0.1  |
-| mysql8019\_mroonga912  | 8.0.18 | 9.12    | 9.1.2   |
-| mysql8018\_mroonga909  | 8.0.18 | 9.09    | 9.0.9   |
-| mysql8017\_mroonga907  | 8.0.17 | 9.07    | 9.0.7   |
-| mysql8017\_mroonga905  | 8.0.17 | 9.05    | 9.0.5   |
-| mysql8016\_mroonga904  | 8.0.16 | 9.04    | 9.0.4   |
-
 ## How to build Mroonga image
 
 * Dockerfile for some couples of MySQL and Mroonga are under "Dockerfile" directory.
@@ -157,7 +159,6 @@ Currently, groonga/mroonga provides these couples of versions.
 ```shell
 $ git clone https://github.com/mroonga/docker mroonga_docker
 $ cd mroonga_docker
-$ sudo docker build -t mysql56-mroonga mysql56
 $ sudo docker build -t mysql57-mroonga mysql57
 $ sudo docker build -t mysql80-mroonga mysql80
 ```
@@ -167,7 +168,6 @@ $ sudo docker build -t mysql80-mroonga mysql80
 ```shell
 $ git clone https://github.com/mroonga/docker mroonga_docker
 $ cd mroonga_docker
-$ test/build.sh mysql56
 $ test/build.sh mysql57
 $ test/build.sh mysql80
 ```

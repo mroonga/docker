@@ -9,9 +9,6 @@ apt:
     - mysql-client
 matrix:
   include:
-    - name: "MySQL 5.6"
-      script:
-        - test/build.sh mysql56
     - name: "MySQL 5.7"
       script:
         - test/build.sh mysql57
