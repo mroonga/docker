@@ -20,10 +20,10 @@ fi
 
 case $mysql_version in
   5.7.*)
-    docker_file=mysql5.7/Dockerfile
+    docker_file=mysql-5.7/Dockerfile
     ;;
   8.0.*)
-    docker_file=mysql8.0/Dockerfile
+    docker_file=mysql-8.0/Dockerfile
     ;;
 esac
 
