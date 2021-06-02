@@ -19,7 +19,12 @@ container_name="name_${image_name}"
 eval $(grep -E -o '[a-z]+_version=[0-9.]+' ../$context/Dockerfile)
 
 sudo docker build -t $image_name ../$context
-sudo docker run -d -p 33061:3306 --name $container_name $image_name
+sudo docker run \
+  -d \
+  -p 33061:3306 \
+  -e MYSQL_ALLOW_EMPTY_PASSWORD=yes \
+  --name $container_name \
+  $image_name
 ### Should test.
 while true ; do
   mysqladmin -h 127.0.0.1 -P 33061 -uroot ping && break
