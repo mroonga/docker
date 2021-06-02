@@ -8,8 +8,8 @@ RUN yum upgrade -y && \
       http://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm && \
     yum clean all
 
-ENV groonga_version=11.0.2 \
-    mroonga_version=11.02 \
+ENV groonga_version=11.0.3 \
+    mroonga_version=11.03 \
     mysql_version=8.0.25
 
 RUN yum install -y \
