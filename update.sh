@@ -19,21 +19,18 @@ else
 fi
 
 case $mysql_version in
-  5.6.*)
-    docker_file=mysql56/Dockerfile
-    ;;
   5.7.*)
-    docker_file=mysql57/Dockerfile
+    docker_file=mysql5.7/Dockerfile
     ;;
   8.0.*)
-    docker_file=mysql80/Dockerfile
+    docker_file=mysql8.0/Dockerfile
     ;;
 esac
 
 ${SED} \
   -i'' \
   -r \
-  -e "s/mysql_version=[0-9.]*/mysql_version=${mysql_version}/g" \
+  -e "s/mysql:[0-9.]*/mysql:${mysql_version}/g" \
   -e "s/mroonga_version=[0-9.]*/mroonga_version=${mroonga_version}/g" \
   -e "s/groonga_version=[0-9.]*/groonga_version=${groonga_version}/g" \
   ${docker_file}
@@ -42,8 +39,7 @@ git add ${docker_file}
 ruby "$(dirname "$0")/update-tag-list.rb" "$@"
 git add README.md
 
-tag=$(echo "mysql${mysql_version}_mroonga${mroonga_version}" | \
-        ${SED} -r -e 's/[.]//g')
+tag="mysql-${mysql_version}-${mroonga_version}"
 message="MySQL ${mysql_version} and Mroonga ${mroonga_version}"
 git commit -m "${message}"
 git tag -a -m "${message}" ${tag}

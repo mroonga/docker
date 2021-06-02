@@ -5,8 +5,6 @@ mroonga_version = ARGV[1]
 groonga_version = ARGV[2]
 
 mysql_series = mysql_version.split(".")[0, 2].join(".")
-mysql_version_tag = mysql_version.gsub(".", "")
-mroonga_version_tag = mroonga_version.gsub(".", "")
 
 readme_md_path = File.join(__dir__, "README.md")
 readme_md_content = ""
@@ -32,7 +30,7 @@ File.readlines(readme_md_path).each do |line|
         components[4] = " %-#*s " % [mroonga_version_width, groonga_version]
         readme_md_content << components.join("|")
 
-        tag = "mysql#{mysql_version_tag}\\_mroonga#{mroonga_version_tag}"
+        tag = "mysql-#{mysql_version}-#{mroonga_version}"
         readme_md_content << [
           "",
           " %-#*s " % [tag_width, tag],
