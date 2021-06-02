@@ -11,7 +11,7 @@ matrix:
   include:
     - name: "MySQL 5.7"
       script:
-        - test/build.sh mysql57
+        - test/build.sh mysql-5.7
     - name: "MySQL 8.0"
       script:
-        - test/build.sh mysql80
+        - test/build.sh mysql-8.0
