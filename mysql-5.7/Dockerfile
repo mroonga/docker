@@ -1,4 +1,4 @@
-FROM mysql:5.7.37
+FROM mysql:5.7.36
 MAINTAINER groonga
 
 ENV groonga_version=11.1.1 \
