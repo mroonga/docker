@@ -7,11 +7,13 @@ ENV groonga_version=11.1.1 \
 RUN apt update && \
     apt install -y -V --no-install-recommends \
       ca-certificates \
+      lsb-release \
       wget && \
-    wget https://packages.groonga.org/debian/groonga-apt-source-latest-buster.deb && \
+    code_name=$(lsb_release --codename --short) && \
+    wget https://packages.groonga.org/debian/groonga-apt-source-latest-${code_name}.deb && \
     apt install -y -V --no-install-recommends \
-      ./groonga-apt-source-latest-buster.deb && \
-    rm groonga-apt-source-latest-buster.deb && \
+      ./groonga-apt-source-latest-${code_name}.deb && \
+    rm groonga-apt-source-latest-${code_name}.deb && \
     apt update && \
     apt install -y -V --no-install-recommends \
       groonga-bin=${groonga_version}-1 \
