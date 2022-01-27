@@ -1,0 +1,59 @@
+name: Build
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+concurrency:
+  group: ${{ github.head_ref || github.sha }}-${{ github.workflow }}
+  cancel-in-progress: true
+jobs:
+  build:
+    name: ${{ matrix.id }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        id:
+          - "mysql-8.0"
+          - "mysql-5.7"
+    steps:
+      - name: Parse ID
+        id: parse
+        run: |
+          set -x
+          case "${{ github.ref }}" in
+            refs/tags/*)
+              version=$(echo "${{ github.ref }}" | sed -e "s,^refs/tags/,,g")
+              ;;
+            *)
+              version=${{ matrix.id }}-latest
+              ;;
+          esac
+          tags="groonga/mroonga:${version}"
+          if [ "${version}" = "mysql-5.7-latest" ]; then
+            tags="${tags},groonga/mroonga:latest"
+          fi
+          echo "::set-output name=tags::${tags}"
+      - uses: actions/checkout@v2
+      - uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - uses: docker/setup-buildx-action@v1
+        id: buildx
+      - uses: docker/build-push-action@v2
+        id: docker_build
+        with:
+          # cache-from: type=gha
+          # cache-to: type=gha,mode=max
+          context: ${{ matrix.id }}
+          push: true
+          tags: ${{ steps.parse.outputs.tags }}
+      - name: Image info
+        run: |
+          echo "ref: ${{ github.ref }}"
+          echo "tags: ${{ steps.parse.outputs.tags }}"
+          echo "digest: ${{ steps.docker_build.outputs.digest }}"

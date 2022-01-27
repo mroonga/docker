@@ -92,7 +92,7 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                    | MySQL  | Mroonga | Groonga |
 |------------------------|--------|---------|---------|
-| mysql80-latest         | 8.0.25 | 11.03   | 11.0.3  |
+| mysql-8.0-latest         | 8.0.25 | 11.03   | 11.0.3  |
 | mysql-8.0.25-11.03     | 8.0.25 | 11.03   | 11.0.3  |
 | mysql8025\_mroonga1103 | 8.0.25 | 11.03   | 11.0.3  |
 | mysql8025\_mroonga1102 | 8.0.25 | 11.02   | 11.0.2  |
