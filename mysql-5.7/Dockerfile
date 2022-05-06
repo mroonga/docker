@@ -1,8 +1,8 @@
-FROM mysql:5.7.37
+FROM mysql:5.7.38
 MAINTAINER groonga
 
-ENV groonga_version=12.0.2 \
-    mroonga_version=12.02
+ENV groonga_version=12.0.3 \
+    mroonga_version=12.03
 
 RUN apt update && \
     apt install -y -V --no-install-recommends \
