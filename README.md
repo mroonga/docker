@@ -35,7 +35,8 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                      | MySQL  | Mroonga | Groonga |
 |--------------------------|--------|---------|---------|
-| mysql-5.7-latest, latest | 5.7.38 | 12.03   | 12.0.3  |
+| mysql-5.7-latest, latest | 5.7.38 | 12.04   | 12.0.4  |
+| mysql-5.7.38-12.04       | 5.7.38 | 12.04   | 12.0.4  |
 | mysql-5.7.38-12.03       | 5.7.38 | 12.03   | 12.0.3  |
 | mysql-5.7.37-12.02       | 5.7.37 | 12.02   | 12.0.2  |
 | mysql-5.7.37-12.00       | 5.7.37 | 12.00   | 12.0.0  |
