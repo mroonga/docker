@@ -1,8 +1,8 @@
 FROM mysql:8.0.29
 MAINTAINER groonga
 
-ENV groonga_version=12.0.3 \
-    mroonga_version=12.03
+ENV groonga_version=12.0.4 \
+    mroonga_version=12.04
 
 RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/default-auth-override.cnf && \
