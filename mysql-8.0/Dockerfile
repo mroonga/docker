@@ -1,8 +1,8 @@
-FROM mysql:8.0.29
+FROM mysql:8.0.30
 MAINTAINER groonga
 
-ENV groonga_version=12.0.4 \
-    mroonga_version=12.04
+ENV groonga_version=12.0.6 \
+    mroonga_version=12.06
 
 RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/default-auth-override.cnf && \
@@ -34,6 +34,6 @@ RUN mkdir -p /docker-entrypoint-mroonga-initdb.d && \
       -e 's,docker_process_init_files /,docker_process_init_files /docker-entrypoint-mroonga-initdb.d/* /,g' \
       /usr/local/bin/docker-entrypoint.sh
 
-# mysql:8.0.* images has DB in /var/lib/mysql/.
+# mysql:8.0.30* images has DB in /var/lib/mysql/.
 # This clears /var/lib/mysql/ to ensure creating a new DB on "docker run".
 VOLUME [/var/lib/mysql]
