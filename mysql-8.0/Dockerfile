@@ -23,6 +23,10 @@ RUN mkdir -p /etc/mysql/mysql.conf.d && \
       groonga-normalizer-mysql \
       groonga-tokenizer-mecab=${groonga_version}-1 \
       mysql-community-8.0-mroonga=${mroonga_version}-1 && \
+    sed \
+      -i'' \
+      -e 's,@MRN_DATA_DIR@,/usr/share/mroonga,g' \
+      /usr/share/mroonga/install.sql && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
