@@ -1,4 +1,4 @@
-FROM mysql:8.0.30
+FROM mysql:8.0.30-debian
 MAINTAINER groonga
 
 ENV groonga_version=12.0.6 \
