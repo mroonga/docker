@@ -34,6 +34,6 @@ RUN mkdir -p /docker-entrypoint-mroonga-initdb.d && \
       -e 's,docker_process_init_files /,docker_process_init_files /docker-entrypoint-mroonga-initdb.d/* /,g' \
       /usr/local/bin/docker-entrypoint.sh
 
-# mysql:8.0.30* images has DB in /var/lib/mysql/.
+# mysql:8.0.30 image has DB in /var/lib/mysql/.
 # This clears /var/lib/mysql/ to ensure creating a new DB on "docker run".
 VOLUME [/var/lib/mysql]
