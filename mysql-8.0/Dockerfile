@@ -16,8 +16,8 @@ RUN mkdir -p /etc/mysql/mysql.conf.d && \
       wget && \
     dnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm && \
     dnf update -y && \
-    dnf install -y \
       groonga=${groonga_version}-1 \
+    dnf install -y --enablerepo=ol8_codeready_builder \
       groonga-normalizer-mysql \
       groonga-tokenizer-mecab=${groonga_version}-1 \
       mysql-community-8.0-mroonga=${mroonga_version}-1 && \
