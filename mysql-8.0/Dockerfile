@@ -14,7 +14,6 @@ RUN mkdir -p /etc/mysql/mysql.conf.d && \
       ca-certificates \
       redhat-lsb \
       wget && \
-    code_name=$(lsb_release --codename --short) && \
     dnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm && \
     dnf update -y && \
     dnf install -y \
