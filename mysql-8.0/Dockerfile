@@ -2,7 +2,9 @@ FROM mysql:8.0.30
 MAINTAINER groonga
 
 ENV groonga_version=12.0.8 \
-    mroonga_version=12.08
+    mroonga_version=12.08 \
+    distribution=el8 \
+    architecture=x86_64
 
 RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/default-auth-override.cnf && \
@@ -16,11 +18,11 @@ RUN mkdir -p /etc/mysql/mysql.conf.d && \
       wget && \
     dnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm && \
     dnf update -y && \
-      groonga=${groonga_version}-1 \
     dnf install -y --enablerepo=ol8_codeready_builder \
+      groonga-${groonga_version}-1.${distribution}.${architecture} \
       groonga-normalizer-mysql \
-      groonga-tokenizer-mecab=${groonga_version}-1 \
-      mysql-community-8.0-mroonga=${mroonga_version}-1 && \
+      groonga-tokenizer-mecab-${groonga_version}-1.${distribution}.${architecture} \
+      mysql-community-8.0-mroonga-${mroonga_version}-1.${distribution}.${architecture} && \
     dnf clean all && \
 
 RUN mkdir -p /docker-entrypoint-mroonga-initdb.d && \
