@@ -7,20 +7,20 @@ ENV groonga_version=12.0.8 \
 RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/default-auth-override.cnf && \
     touch /etc/mysql/mysql.conf.d/lowercase-table-names.cnf && \
-    dnf update -y && \
-    dnf install -y \
+    microdnf update -y && \
+    microdnf install -y \
       ca-certificates \
       redhat-lsb \
       wget && \
     code_name=$(lsb_release --codename --short) && \
-    dnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm && \
-    dnf update -y && \
-    dnf install -y \
+    microdnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm && \
+    microdnf update -y && \
+    microdnf install -y \
       groonga-bin=${groonga_version}-1 \
       groonga-normalizer-mysql \
       groonga-tokenizer-mecab=${groonga_version}-1 \
       mysql-community-8.0-mroonga=${mroonga_version}-1 && \
-    dnf clean all && \
+    microdnf clean all && \
 
 RUN mkdir -p /docker-entrypoint-mroonga-initdb.d && \
     cp /usr/share/mroonga/install.sql \
