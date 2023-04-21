@@ -17,8 +17,9 @@ RUN mkdir -p /etc/mysql/mysql.conf.d && \
     sed -i'' -e '26d' /etc/pki/rpm-gpg/RPM-GPG-KEY-Apache-Arrow && \
     wget https://packages.groonga.org/almalinux/$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)/groonga-release-latest.noarch.rpm && \
     rpm -Uvh groonga-release-latest.noarch.rpm && \
-    microdnf install -y --enablerepo=ol$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)_codeready_builder mysql-community-minimal-8.0-mroonga && \
-    microdnf install -y \
+    microdnf install -y
+      --enablerepo=ol$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)_codeready_builder \
+      --enablerepo=groonga-almalinux \
       groonga-normalizer-mysql \
       groonga-tokenizer-mecab \
       mysql-community-minimal-8.0-mroonga && \
