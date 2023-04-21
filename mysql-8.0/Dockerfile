@@ -22,7 +22,7 @@ RUN mkdir -p /etc/mysql/mysql.conf.d && \
       --enablerepo=groonga-almalinux \
       groonga-normalizer-mysql \
       groonga-tokenizer-mecab \
-      mysql-community-minimal-8.0-mroonga && \
+      mysql-community-minimal-8.0-mroonga
 
 RUN mkdir -p /docker-entrypoint-mroonga-initdb.d && \
     cp /usr/share/mroonga/install.sql \
