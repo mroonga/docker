@@ -10,9 +10,13 @@ RUN mkdir -p /etc/mysql/mysql.conf.d && \
     major_version=$(cut -d: -f5 /etc/system-release-cpe | grep -o "^[0-9]") && \
     microdnf install -y \
       epel-release && \
+    wget https://apache.jfrog.io/artifactory/arrow/almalinux/$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)/apache-arrow-release-latest.rpm && \
+    rpm -Uvh apache-arrow-release-latest.rpm && \
+    sed -i'' -e '26d' /etc/pki/rpm-gpg/RPM-GPG-KEY-Apache-Arrow && \
     microdnf install -y \
       wget && \
     microdnf install -y \
+      arrow11-libs \
       cmake-filesystem \
       lz4 \
       msgpack \
@@ -23,13 +27,11 @@ RUN mkdir -p /etc/mysql/mysql.conf.d && \
     wget ${powertools_base}/glog-0.3.5-3.el8.x86_64.rpm && \
     wget ${powertools_base}/gflags-devel-2.1.2-6.el8.x86_64.rpm && \
     wget ${powertools_base}/gflags-2.1.2-6.el8.x86_64.rpm && \
-    apache_arrow_base=https://apache.jfrog.io/artifactory/arrow/almalinux/${major_version}/x86_64/Packages && \
-    wget ${apache_arrow_base}/arrow11-libs-11.0.0-1.el8.x86_64.rpm && \
     groonga_base=http://packages.groonga.org/almalinux/${major_version}/x86_64/Packages && \
     wget ${groonga_base}/mysql-community-minimal-8.0-mroonga-13.01-1.el8.x86_64.rpm && \
     wget ${groonga_base}/groonga-libs-13.0.1-1.el8.x86_64.rpm && \
     wget ${groonga_base}/groonga-normalizer-mysql-1.2.1-1.el8.x86_64.rpm && \
-    rpm -ivh ./*.rpm && \
+    rpm -ivh ./*.rpm
 
 RUN mkdir -p /docker-entrypoint-mroonga-initdb.d && \
     cp /usr/share/mroonga/install.sql \
