@@ -9,15 +9,16 @@ RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/lowercase-table-names.cnf && \
     major_version=$(cut -d: -f5 /etc/system-release-cpe | grep -o "^[0-9]") && \
     microdnf install -y \
+      epel-release && \
+    microdnf install -y \
       wget && \
     microdnf install -y \
       cmake-filesystem \
       lz4 \
+      msgpack \
+      re2 \
       snappy \
       xxhash-libs && \
-    epel_base=https://dl.fedoraproject.org/pub/epel/${major_version}/Everything/x86_64/Packages && \
-    wget ${epel_base}/m/msgpack-3.1.0-3.el8.x86_64.rpm && \
-    wget ${epel_base}/r/re2-20190801-1.el8.x86_64.rpm && \
     powertools_base=https://repo.almalinux.org/almalinux/${major_version}/PowerTools/x86_64/os/Packages && \
     wget ${powertools_base}/glog-0.3.5-3.el8.x86_64.rpm && \
     wget ${powertools_base}/gflags-devel-2.1.2-6.el8.x86_64.rpm && \
