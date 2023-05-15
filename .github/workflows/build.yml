@@ -71,10 +71,10 @@ jobs:
           echo "ref: ${{ github.ref }}"
           echo "tags: ${{ steps.parse.outputs.tags }}"
           echo "digest: ${{ steps.docker_build.outputs.digest }}"
-#      - uses: actions/checkout@v3
-#        with:
-#          path: mroonga
-#          repository: mroonga/mroonga
+      - uses: actions/checkout@v3
+        with:
+          path: mroonga
+          repository: mroonga/mroonga
 #      -name: Test
 #       run: |
 #         docker run \
