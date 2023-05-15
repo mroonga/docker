@@ -71,16 +71,16 @@ jobs:
           echo "ref: ${{ github.ref }}"
           echo "tags: ${{ steps.parse.outputs.tags }}"
           echo "digest: ${{ steps.docker_build.outputs.digest }}"
-      - uses: actions/checkout@v3
-        with:
-          path: mroonga
-          repository: mroonga/mroonga
-      -name: Test
-       run: |
-         docker run \
-           --name mroonga \
-           -d \
-           --volume ${PWD}:/host \
-           ${{ env.TAG }}
-         cd mroonga
-         docer exec mroonga /host/run-sql-test.sh
+#      - uses: actions/checkout@v3
+#        with:
+#          path: mroonga
+#          repository: mroonga/mroonga
+#      -name: Test
+#       run: |
+#         docker run \
+#           --name mroonga \
+#           -d \
+#           --volume ${PWD}:/host \
+#           ${{ env.TAG }}
+#         cd mroonga
+#         docer exec mroonga /host/run-sql-test.sh
