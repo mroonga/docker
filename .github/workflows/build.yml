@@ -82,6 +82,5 @@ jobs:
            -d \
            --volume ${PWD}:/host \
            ${{ env.TAG }}
-
          cd mroonga
          docer exec mroonga /host/run-sql-test.sh
