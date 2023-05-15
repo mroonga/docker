@@ -75,12 +75,12 @@ jobs:
         with:
           path: mroonga
           repository: mroonga/mroonga
-#      -name: Test
-#       run: |
-#         docker run \
-#           --name mroonga \
-#           -d \
-#           --volume ${PWD}:/host \
-#           ${{ env.TAG }}
-#         cd mroonga
-#         docer exec mroonga /host/run-sql-test.sh
+      - name: Test
+        run: |
+          docker run \
+            --name mroonga \
+            -d \
+            --volume ${PWD}:/host \
+            ${{ env.TAG }}
+          cd mroonga
+          docer exec mroonga /host/run-sql-test.sh
