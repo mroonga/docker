@@ -85,4 +85,4 @@ jobs:
           cd mroonga
           ls -al test
           pwd
-          docker exec mroonga test/run-sql-test.sh
+          docker exec mroonga ${PWD}/test/run-sql-test.sh
