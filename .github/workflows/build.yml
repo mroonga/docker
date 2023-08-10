@@ -83,4 +83,5 @@ jobs:
             --volume ${PWD}:/host \
             ${{ env.TAG }}
           cd mroonga
-          docker exec mroonga /host/test/run-sql-test.sh
+          ls -al
+          docker exec mroonga test/run-sql-test.sh
