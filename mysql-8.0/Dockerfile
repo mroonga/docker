@@ -1,34 +1,28 @@
-FROM mysql:8.0.30-debian
+FROM mysql:8.0.32-oracle
 MAINTAINER groonga
 
-ENV groonga_version=12.0.6 \
-    mroonga_version=12.06
+ENV groonga_version=13.0.1 \
+    mroonga_version=13.01
 
 RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/default-auth-override.cnf && \
     touch /etc/mysql/mysql.conf.d/lowercase-table-names.cnf && \
-    apt update && \
-    apt install -y -V --no-install-recommends \
-      ca-certificates \
-      lsb-release \
+    major_version=$(cut -d: -f5 /etc/system-release-cpe | grep -o "^[0-9]") && \
+    microdnf install -y \
       wget && \
-    code_name=$(lsb_release --codename --short) && \
-    wget https://packages.groonga.org/debian/groonga-apt-source-latest-${code_name}.deb && \
-    apt install -y -V --no-install-recommends \
-      ./groonga-apt-source-latest-${code_name}.deb && \
-    rm groonga-apt-source-latest-${code_name}.deb && \
-    apt update && \
-    apt install -y -V --no-install-recommends \
-      groonga-bin=${groonga_version}-1 \
+    microdnf install -y \
+      epel-release && \
+    wget https://apache.jfrog.io/artifactory/arrow/almalinux/$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)/apache-arrow-release-latest.rpm && \
+    rpm -Uvh apache-arrow-release-latest.rpm && \
+    sed -i'' -e '26d' /etc/pki/rpm-gpg/RPM-GPG-KEY-Apache-Arrow && \
+    wget https://packages.groonga.org/almalinux/$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)/groonga-release-latest.noarch.rpm && \
+    rpm -Uvh groonga-release-latest.noarch.rpm && \
+    microdnf install -y \
+      --enablerepo=ol$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)_codeready_builder \
+      --enablerepo=groonga-almalinux \
       groonga-normalizer-mysql \
-      groonga-tokenizer-mecab=${groonga_version}-1 \
-      mysql-community-8.0-mroonga=${mroonga_version}-1 && \
-    sed \
-      -i'' \
-      -e 's,@MRN_DATA_DIR@,/usr/share/mroonga,g' \
-      /usr/share/mroonga/install.sql && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/*
+      groonga-tokenizer-mecab \
+      mysql-community-minimal-8.0-mroonga
 
 RUN mkdir -p /docker-entrypoint-mroonga-initdb.d && \
     cp /usr/share/mroonga/install.sql \
