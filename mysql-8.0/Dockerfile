@@ -1,34 +1,29 @@
-FROM mysql:8.0.30-debian
+FROM mysql:8.0.30
 MAINTAINER groonga
 
-ENV groonga_version=12.0.6 \
-    mroonga_version=12.06
+ENV groonga_version=12.0.8 \
+    mroonga_version=12.08 \
+    distribution=el8 \
+    architecture=x86_64
 
 RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/default-auth-override.cnf && \
     touch /etc/mysql/mysql.conf.d/lowercase-table-names.cnf && \
-    apt update && \
-    apt install -y -V --no-install-recommends \
+    microdnf update -y && \
+    microdnf install -y dnf && \
+    microdnf clean all && \
+    dnf install -y \
       ca-certificates \
-      lsb-release \
+      redhat-lsb \
       wget && \
-    code_name=$(lsb_release --codename --short) && \
-    wget https://packages.groonga.org/debian/groonga-apt-source-latest-${code_name}.deb && \
-    apt install -y -V --no-install-recommends \
-      ./groonga-apt-source-latest-${code_name}.deb && \
-    rm groonga-apt-source-latest-${code_name}.deb && \
-    apt update && \
-    apt install -y -V --no-install-recommends \
-      groonga-bin=${groonga_version}-1 \
+    dnf install -y https://packages.groonga.org/almalinux/8/groonga-release-latest.noarch.rpm && \
+    dnf update -y && \
+    dnf install -y --enablerepo=ol8_codeready_builder \
+      groonga-${groonga_version}-1.${distribution}.${architecture} \
       groonga-normalizer-mysql \
-      groonga-tokenizer-mecab=${groonga_version}-1 \
-      mysql-community-8.0-mroonga=${mroonga_version}-1 && \
-    sed \
-      -i'' \
-      -e 's,@MRN_DATA_DIR@,/usr/share/mroonga,g' \
-      /usr/share/mroonga/install.sql && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/*
+      groonga-tokenizer-mecab-${groonga_version}-1.${distribution}.${architecture} \
+      mysql-community-8.0-mroonga-${mroonga_version}-1.${distribution}.${architecture} && \
+    dnf clean all && \
 
 RUN mkdir -p /docker-entrypoint-mroonga-initdb.d && \
     cp /usr/share/mroonga/install.sql \
