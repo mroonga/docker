@@ -23,25 +23,15 @@ jobs:
         id: parse
         run: |
           set -x
-          case "${{ github.ref }}" in
-            refs/tags/*)
-              version="${{ github.ref_name }}"
-              case "${version}" in
-                ${{ matrix.id }}.*)
-                  ;;
-                *)
-                  version=${{ matrix.id }}-latest
-                  ;;
-              esac
-              ;;
-            *)
-              version=${{ matrix.id }}-latest
-              ;;
-          esac
 
           push=false
-          if [[ "${{ github.event_name }}" = "push" ]]; then
-            push=true
+          if [ "${GITHUB_REF_TYPE}" = "tag" ] -a [[ "${GITHUB_REF_NAME}" =~ ^${{ matrix.id }}\. ]]; then
+            version="${GITHUB_REF_NAME}"
+            if [ "${GITHUB_EVENT_NAME}" = "push" ]; then
+              push=true
+            fi
+          else
+            version=${{ matrix.id }}-latest
           fi
 
           tags="groonga/mroonga:${version}"
