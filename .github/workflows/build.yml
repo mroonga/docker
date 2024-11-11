@@ -23,25 +23,27 @@ jobs:
         id: parse
         run: |
           set -x
-          push=false
           case "${{ github.ref }}" in
             refs/tags/*)
-              version=$(echo "${{ github.ref }}" | sed -e "s,^refs/tags/,,g")
+              version="${{ github.ref_name }}"
               case "${version}" in
                 ${{ matrix.id }}.*)
-                  push=true
                   ;;
                 *)
                   version=${{ matrix.id }}-latest
-                  push=false
                   ;;
               esac
               ;;
             *)
               version=${{ matrix.id }}-latest
-              push=true
               ;;
           esac
+
+          push=false
+          if [[ "${{ github.event_name }}" = "push" ]]; then
+            push=true
+          fi
+
           tags="groonga/mroonga:${version}"
           if [ "${version}" = "mysql-8.0-latest" ]; then
             tags="${tags},groonga/mroonga:latest"
