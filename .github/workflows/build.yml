@@ -18,7 +18,6 @@ jobs:
       matrix:
         id:
           - "mysql-8.0"
-          - "mysql-5.7"
     steps:
       - name: Parse ID
         id: parse

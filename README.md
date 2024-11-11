@@ -31,7 +31,35 @@ If your /path/to/datadir doesn't have ibdata1, container decides to re-initializ
 Currently, groonga/mroonga provides these couples of versions.
 ([tags](https://hub.docker.com/r/groonga/mroonga/tags/) cannot display all of them..)
 
+### For MySQL 8.0
+
+| tag                    | MySQL  | Mroonga | Groonga |
+|------------------------|--------|---------|---------|
+| mysql-8.0-latest       | 8.0.30 | 12.06   | 12.0.6  |
+| mysql-8.0.30-12.06     | 8.0.30 | 12.06   | 12.0.6  |
+| mysql-8.0.29-12.04     | 8.0.29 | 12.04   | 12.0.4  |
+| mysql-8.0.29-12.03     | 8.0.29 | 12.03   | 12.0.3  |
+| mysql-8.0.28-12.02     | 8.0.28 | 12.02   | 12.0.2  |
+| mysql-8.0.28-12.00     | 8.0.28 | 12.00   | 12.0.0  |
+| mysql-8.0.28-11.13     | 8.0.28 | 11.13   | 11.1.3  |
+| mysql-8.0.27-11.13     | 8.0.27 | 11.13   | 11.1.3  |
+| mysql-8.0.25-11.03     | 8.0.25 | 11.03   | 11.0.3  |
+| mysql8025\_mroonga1103 | 8.0.25 | 11.03   | 11.0.3  |
+| mysql8025\_mroonga1102 | 8.0.25 | 11.02   | 11.0.2  |
+| mysql8023\_mroonga1101 | 8.0.23 | 11.01   | 11.0.1  |
+| mysql8023\_mroonga1100 | 8.0.23 | 11.00   | 11.0.0  |
+| mysql8023\_mroonga1011 | 8.0.23 | 10.11   | 10.1.1  |
+| mysql8022\_mroonga1010 | 8.0.22 | 10.10   | 10.1.0  |
+| mysql8019\_mroonga1001 | 8.0.19 | 10.01   | 10.0.1  |
+| mysql8019\_mroonga912  | 8.0.18 | 9.12    | 9.1.2   |
+| mysql8018\_mroonga909  | 8.0.18 | 9.09    | 9.0.9   |
+| mysql8017\_mroonga907  | 8.0.17 | 9.07    | 9.0.7   |
+| mysql8017\_mroonga905  | 8.0.17 | 9.05    | 9.0.5   |
+| mysql8016\_mroonga904  | 8.0.16 | 9.04    | 9.0.4   |
+
 ### For MySQL 5.7
+
+EOL
 
 | tag                      | MySQL  | Mroonga | Groonga |
 |--------------------------|--------|---------|---------|
@@ -94,32 +122,6 @@ Currently, groonga/mroonga provides these couples of versions.
 | mysql5710\_mroonga511    | 5.7.10 | 5.11    | 5.1.1   |
 | mysql5710\_mroonga510    | 5.7.10 | 5.10    | 5.1.0   |
 | mysql579\_mroonga509     | 5.7.9  | 5.09    | 5.0.9   |
-
-### For MySQL 8.0
-
-| tag                    | MySQL  | Mroonga | Groonga |
-|------------------------|--------|---------|---------|
-| mysql-8.0-latest       | 8.0.30 | 12.06   | 12.0.6  |
-| mysql-8.0.30-12.06     | 8.0.30 | 12.06   | 12.0.6  |
-| mysql-8.0.29-12.04     | 8.0.29 | 12.04   | 12.0.4  |
-| mysql-8.0.29-12.03     | 8.0.29 | 12.03   | 12.0.3  |
-| mysql-8.0.28-12.02     | 8.0.28 | 12.02   | 12.0.2  |
-| mysql-8.0.28-12.00     | 8.0.28 | 12.00   | 12.0.0  |
-| mysql-8.0.28-11.13     | 8.0.28 | 11.13   | 11.1.3  |
-| mysql-8.0.27-11.13     | 8.0.27 | 11.13   | 11.1.3  |
-| mysql-8.0.25-11.03     | 8.0.25 | 11.03   | 11.0.3  |
-| mysql8025\_mroonga1103 | 8.0.25 | 11.03   | 11.0.3  |
-| mysql8025\_mroonga1102 | 8.0.25 | 11.02   | 11.0.2  |
-| mysql8023\_mroonga1101 | 8.0.23 | 11.01   | 11.0.1  |
-| mysql8023\_mroonga1100 | 8.0.23 | 11.00   | 11.0.0  |
-| mysql8023\_mroonga1011 | 8.0.23 | 10.11   | 10.1.1  |
-| mysql8022\_mroonga1010 | 8.0.22 | 10.10   | 10.1.0  |
-| mysql8019\_mroonga1001 | 8.0.19 | 10.01   | 10.0.1  |
-| mysql8019\_mroonga912  | 8.0.18 | 9.12    | 9.1.2   |
-| mysql8018\_mroonga909  | 8.0.18 | 9.09    | 9.0.9   |
-| mysql8017\_mroonga907  | 8.0.17 | 9.07    | 9.0.7   |
-| mysql8017\_mroonga905  | 8.0.17 | 9.05    | 9.0.5   |
-| mysql8016\_mroonga904  | 8.0.16 | 9.04    | 9.0.4   |
 
 ### For MySQL 5.6
 
