@@ -23,15 +23,15 @@ jobs:
         id: parse
         run: |
           set -x
-
-          push=false
-          if [ "${GITHUB_REF_TYPE}" = "tag" ] -a [[ "${GITHUB_REF_NAME}" =~ ^${{ matrix.id }}\. ]]; then
+          if [ "${GITHUB_REF_TYPE}" = "tag" ] && [[ "${GITHUB_REF_NAME}" =~ ^${{ matrix.id }}\. ]]; then
             version="${GITHUB_REF_NAME}"
-            if [ "${GITHUB_EVENT_NAME}" = "push" ]; then
-              push=true
-            fi
           else
             version=${{ matrix.id }}-latest
+          fi
+
+          push=false
+          if [ "${GITHUB_EVENT_NAME}" = "push" ] && [ "${GITHUB_REF_TYPE}" != "tag" ]; then
+            push=true
           fi
 
           tags="groonga/mroonga:${version}"
