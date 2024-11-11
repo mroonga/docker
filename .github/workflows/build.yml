@@ -49,7 +49,7 @@ jobs:
           fi
           echo "::set-output name=push::${push}"
           echo "::set-output name=tags::${tags}"
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
