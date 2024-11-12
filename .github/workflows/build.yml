@@ -30,8 +30,11 @@ jobs:
           fi
 
           push=false
-          if [ "${GITHUB_EVENT_NAME}" = "push" ] && [ "${GITHUB_REF_TYPE}" != "tag" ]; then
+          if [ "${GITHUB_EVENT_NAME}" = "push" ]; then
             push=true
+            if [ "${GITHUB_REF_TYPE}" = "tag" ] && [[ !("${GITHUB_REF_NAME}" =~ ^${{ matrix.id }}\.) ]]; then
+              push=false
+            fi
           fi
 
           tags="groonga/mroonga:${version}"
