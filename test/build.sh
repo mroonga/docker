@@ -19,7 +19,7 @@ container_name="name_${image_name}"
 eval $(grep -E -o '[a-z]+_version=[0-9.]+' ../$context/Dockerfile)
 mysql_version=$(head -n1 ../$context/Dockerfile | grep -E -o '[0-9.]+')
 
-sudo docker build -t $image_name ../$context
+sudo docker --debug build -t $image_name ../$context
 sudo docker run \
   -d \
   -p 33061:3306 \
