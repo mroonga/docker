@@ -58,9 +58,15 @@ jobs:
           # cache-to: type=gha,mode=max
           context: ${{ matrix.id }}
           push: ${{ steps.parse.outputs.push }}
+          load: ${{ steps.parse.outputs.push != 'true' }}
           tags: ${{ steps.parse.outputs.tags }}
       - name: Image info
         run: |
           echo "ref: ${{ github.ref }}"
           echo "tags: ${{ steps.parse.outputs.tags }}"
           echo "digest: ${{ steps.docker_build.outputs.digest }}"
+      - name: Test
+        run: |
+         test/build.sh \
+           "${{ matrix.id }}" \
+           "${{ steps.parse.outputs.tags }}"
