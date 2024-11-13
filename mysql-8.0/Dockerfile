@@ -1,4 +1,12 @@
-FROM mysql:8.0.40-debian
+FROM mysql:8.0.40-oraclelinux9
+
+# TODO
+# Remove `--setopt=apache-arrow-almalinux.gpgcheck=0` option.
+# It is specified because the installation fails with the following error.
+# ```
+# (microdnf:544): libdnf-WARNING **: 04:37:39.459: failed to parse public key for /etc/pki/rpm-gpg/RPM-GPG-KEY-Apache-Arrow
+# error: failed to parse public key for /var/cache/yum/metadata/apache-arrow-almalinux-9-x86_64/RPM-GPG-KEY-Apache-Arrow
+# ```
 
 ENV groonga_version=14.1.0 \
     mroonga_version=14.10
@@ -6,25 +14,15 @@ ENV groonga_version=14.1.0 \
 RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/default-auth-override.cnf && \
     touch /etc/mysql/mysql.conf.d/lowercase-table-names.cnf && \
-    apt update && \
-    apt install -y -V --no-install-recommends \
-      ca-certificates \
-      lsb-release \
-      wget && \
-    code_name=$(lsb_release --codename --short) && \
-    wget https://packages.groonga.org/debian/groonga-apt-source-latest-${code_name}.deb && \
-    apt install -y -V --no-install-recommends \
-      ./groonga-apt-source-latest-${code_name}.deb && \
-    rm groonga-apt-source-latest-${code_name}.deb && \
-    apt update && \
-    apt install -y -V --no-install-recommends \
-      groonga-bin=${groonga_version}-1 \
-      groonga-normalizer-mysql \
-      groonga-tokenizer-mecab=${groonga_version}-1 \
-      mysql-community-8.0-mroonga=${mroonga_version}-1 && \
-    rm -rf /var/lib/mysql && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/*
+    microdnf install -y \
+      'dnf-command(config-manager)' \
+      epel-release && \
+    rpm -i https://packages.groonga.org/almalinux/9/groonga-release-latest.noarch.rpm && \
+    rpm -i https://apache.jfrog.io/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm && \
+    microdnf install -y \
+      --setopt=apache-arrow-almalinux.gpgcheck=0 \
+      mysql-community-minimal-8.0-mroonga-${mroonga_version}-1.el9.x86_64 && \
+    microdnf clean all
 
 RUN mkdir -p /docker-entrypoint-mroonga-initdb.d && \
     cp /usr/share/mroonga/install.sql \
