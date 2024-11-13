@@ -21,6 +21,7 @@ RUN mkdir -p /etc/mysql/mysql.conf.d && \
     rpm -i https://apache.jfrog.io/artifactory/arrow/almalinux/9/apache-arrow-release-latest.rpm && \
     microdnf install -y \
       --setopt=apache-arrow-almalinux.gpgcheck=0 \
+      groonga-tokenizer-mecab-${groonga_version}-1.el9.x86_64 \
       mysql-community-minimal-8.0-mroonga-${mroonga_version}-1.el9.x86_64 && \
     microdnf clean all
 
