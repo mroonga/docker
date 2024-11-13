@@ -19,8 +19,8 @@ container_name="name_${image_name}"
 eval $(grep -E -o '[a-z]+_version=[0-9.]+' ../$context/Dockerfile)
 mysql_version=$(head -n1 ../$context/Dockerfile | grep -E -o '[0-9.]{2,}')
 
-sudo docker --debug build -t $image_name ../$context
-sudo docker run \
+sudo docker --debug image build -t $image_name ../$context
+sudo docker container run \
   -d \
   -p 33061:3306 \
   -e MYSQL_ALLOW_EMPTY_PASSWORD=yes \
@@ -44,8 +44,8 @@ set +e
 diff -u /tmp/expected.txt /tmp/actual.txt
 success=$?
 set -e
-sudo docker stop $container_name
-sudo docker logs $container_name
-sudo docker rm $container_name
-sudo docker rmi $image_name
+sudo docker container stop $container_name
+sudo docker container logs $container_name
+sudo docker container rm $container_name
+sudo docker image rm $image_name
 exit $success

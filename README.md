@@ -6,7 +6,7 @@
 
 You can start Mroonga as
 ```
-$ sudo docker run -d groonga/mroonga
+$ sudo docker container run -d groonga/mroonga
 $ mysql -h <container's ipaddr> -u root
 ```
 
@@ -19,7 +19,7 @@ MySQL root account doesn't set any password and isn't limited by connecting host
 Now, we support to mount datadir from host machine like this.
 
 ```
-$ sudo docker run -d -v /path/to/datadir:/var/lib/mysql groonga/mroonga
+$ sudo docker container run -d -v /path/to/datadir:/var/lib/mysql groonga/mroonga
 ```
 
 If your /path/to/datadir has ibdata1, container decides using datadir as is.
@@ -186,7 +186,7 @@ EOL
 ```shell
 $ git clone https://github.com/mroonga/docker mroonga_docker
 $ cd mroonga_docker
-$ sudo docker build -t mysql80-mroonga mysql-8.0
+$ sudo docker image build -t mysql80-mroonga mysql-8.0
 ```
 
 ## How to test
