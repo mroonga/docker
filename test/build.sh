@@ -14,7 +14,7 @@ context=$1
 image_name=${2:-}
 
 timestamp=$(date +%s)
-container_name="name_${image_name}"
+container_name="mroonga_build_test_${timestamp}"
 
 eval $(grep -E -o '[a-z]+_version=[0-9.]+' ../$context/Dockerfile)
 mysql_version=$(head -n1 ../$context/Dockerfile | grep -E -o '[0-9.]{2,}')
