@@ -18,39 +18,34 @@ jobs:
       matrix:
         id:
           - "mysql-8.0"
-          - "mysql-5.7"
     steps:
       - name: Parse ID
         id: parse
         run: |
           set -x
+          if [ "${GITHUB_REF_TYPE}" = "tag" ] && [[ "${GITHUB_REF_NAME}" =~ ^${{ matrix.id }}\. ]]; then
+            version="${GITHUB_REF_NAME}"
+          else
+            version=${{ matrix.id }}-latest
+          fi
+
           push=false
-          case "${{ github.ref }}" in
-            refs/tags/*)
-              version=$(echo "${{ github.ref }}" | sed -e "s,^refs/tags/,,g")
-              case "${version}" in
-                ${{ matrix.id }}.*)
-                  push=true
-                  ;;
-                *)
-                  version=${{ matrix.id }}-latest
-                  push=false
-                  ;;
-              esac
-              ;;
-            *)
-              version=${{ matrix.id }}-latest
-              push=true
-              ;;
-          esac
+          if [ "${GITHUB_EVENT_NAME}" = "push" ]; then
+            push=true
+            if [ "${GITHUB_REF_TYPE}" = "tag" ] && [ "${version}" != "${GITHUB_REF_NAME}" ]; then
+              push=false
+            fi
+          fi
+
           tags="groonga/mroonga:${version}"
-          if [ "${version}" = "mysql-5.7-latest" ]; then
+          if [ "${version}" = "mysql-8.0-latest" ]; then
             tags="${tags},groonga/mroonga:latest"
           fi
           echo "::set-output name=push::${push}"
           echo "::set-output name=tags::${tags}"
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3
+        if: steps.parse.outputs.push == 'true'
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}

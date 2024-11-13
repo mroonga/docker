@@ -4,7 +4,7 @@ set -eu
 
 if [ $# != 3 ]; then
   echo "Usage: $0 MYSQL_VERSION MROONGA_VERSION GROONGA_VERSION"
-  echo " e.g.: $0 5.7.26 9.01 9.0.2"
+  echo " e.g.: $0 8.0.30 12.06 12.0.6"
   exit 1
 fi
 
@@ -19,9 +19,6 @@ else
 fi
 
 case $mysql_version in
-  5.7.*)
-    docker_file=mysql-5.7/Dockerfile
-    ;;
   8.0.*)
     docker_file=mysql-8.0/Dockerfile
     ;;

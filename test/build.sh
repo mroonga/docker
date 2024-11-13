@@ -4,7 +4,7 @@ set -eu
 
 if [ $# != 1 ]; then
   echo "Usage: $0 CONTEXT"
-  echo " e.g.: $0 mysql-5.7"
+  echo " e.g.: $0 mysql-8.0"
   exit 1
 fi
 
