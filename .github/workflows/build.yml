@@ -32,7 +32,7 @@ jobs:
           push=false
           if [ "${GITHUB_EVENT_NAME}" = "push" ]; then
             push=true
-            if [ "${GITHUB_REF_TYPE}" = "tag" ] && [[ !("${GITHUB_REF_NAME}" =~ ^${{ matrix.id }}\.) ]]; then
+            if [ "${GITHUB_REF_TYPE}" = "tag" ] && [ "${version}" != "${GITHUB_REF_NAME}" ]; then
               push=false
             fi
           fi
