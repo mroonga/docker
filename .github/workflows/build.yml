@@ -37,11 +37,13 @@ jobs:
             fi
           fi
 
-          tags="groonga/mroonga:${version}"
+          tag="groonga/mroonga:${version}"
+          tags="${tag}"
           if [ "${version}" = "mysql-8.0-latest" ]; then
             tags="${tags},groonga/mroonga:latest"
           fi
           echo "::set-output name=push::${push}"
+          echo "::set-output name=tag::${tag}"
           echo "::set-output name=tags::${tags}"
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3
@@ -69,4 +71,4 @@ jobs:
         run: |
          test/build.sh \
            "${{ matrix.id }}" \
-           "${{ steps.parse.outputs.tags }}"
+           "${{ steps.parse.outputs.tag }}"
