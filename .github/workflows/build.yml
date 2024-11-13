@@ -37,11 +37,13 @@ jobs:
             fi
           fi
 
-          tags="groonga/mroonga:${version}"
+          tag="groonga/mroonga:${version}"
+          tags="${tag}"
           if [ "${version}" = "mysql-8.0-latest" ]; then
             tags="${tags},groonga/mroonga:latest"
           fi
           echo "::set-output name=push::${push}"
+          echo "::set-output name=tag::${tag}"
           echo "::set-output name=tags::${tags}"
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3
@@ -58,9 +60,15 @@ jobs:
           # cache-to: type=gha,mode=max
           context: ${{ matrix.id }}
           push: ${{ steps.parse.outputs.push }}
+          load: ${{ steps.parse.outputs.push != 'true' }}
           tags: ${{ steps.parse.outputs.tags }}
       - name: Image info
         run: |
           echo "ref: ${{ github.ref }}"
           echo "tags: ${{ steps.parse.outputs.tags }}"
           echo "digest: ${{ steps.docker_build.outputs.digest }}"
+      - name: Test
+        run: |
+         test/build.sh \
+           "${{ matrix.id }}" \
+           "${{ steps.parse.outputs.tag }}"
