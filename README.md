@@ -186,8 +186,7 @@ EOL
 ```shell
 $ git clone https://github.com/mroonga/docker mroonga_docker
 $ cd mroonga_docker
-$ sudo docker build -t mysql57-mroonga mysql57
-$ sudo docker build -t mysql80-mroonga mysql80
+$ sudo docker build -t mysql80-mroonga mysql-8.0
 ```
 
 ## How to test
@@ -195,15 +194,14 @@ $ sudo docker build -t mysql80-mroonga mysql80
 ```shell
 $ git clone https://github.com/mroonga/docker mroonga_docker
 $ cd mroonga_docker
-$ test/build.sh mysql57
-$ test/build.sh mysql80
+$ test/build.sh mysql-8.0
 ```
 
 ## How to release
 
 ```shell
 $ ./update.sh ${MYSQL_VERSION} ${MROONGA_VERSION} ${GROONGA_VERSION}
-(./update.sh 5.7.26 9.04 9.0.4)
+(./update.sh 8.0.30 12.06 12.0.6)
 $ git push
 $ git push --tags
 ```
