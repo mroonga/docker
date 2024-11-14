@@ -45,7 +45,7 @@ while true ; do
   sleep 1
 done
 
-for i in {1..10}; do
+for i in {1..30}; do
   # Need to wait a bit until Mroonga is available.
   run_sql "SELECT mroonga_command('status')" > /dev/null 2>&1 && break
   sleep 1
