@@ -181,7 +181,8 @@ EOL
 
 ## How to build Mroonga image
 
-* Dockerfile for some couples of MySQL and Mroonga are under "Dockerfile" directory.
+Dockerfiles are located in each build context.
+For example, Dockerfile for MySQL 8.0 and Mroonga is under the `mysql-8.0` directory.
 
 ```shell
 $ git clone https://github.com/mroonga/docker mroonga_docker
@@ -191,10 +192,13 @@ $ sudo docker image build -t mysql80-mroonga mysql-8.0
 
 ## How to test
 
+You can test that the image was built as expected with `test.sh`.
+The arguments are the build context and the image name.
+
 ```shell
 $ git clone https://github.com/mroonga/docker mroonga_docker
 $ cd mroonga_docker
-$ test/build.sh mysql-8.0
+$ ./test.sh mysql-8.0 mysql80-mroonga
 ```
 
 ## How to release

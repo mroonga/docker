@@ -69,6 +69,6 @@ jobs:
           echo "digest: ${{ steps.docker_build.outputs.digest }}"
       - name: Test
         run: |
-         test/build.sh \
+         ./test.sh \
            "${{ matrix.id }}" \
            "${{ steps.parse.outputs.tag }}"
