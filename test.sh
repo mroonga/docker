@@ -20,13 +20,13 @@ eval $(grep -E -o '[a-z]+_version=[0-9.]+' $context/Dockerfile)
 mysql_version=$(head -n1 $context/Dockerfile | grep -E -o '[0-9.]{2,}')
 
 function run_sql() {
-  sql="$1"
+  local sql="$1"
   docker container exec "${container_name}" mysql -uroot -sse "${sql}"
 }
 
 function assert() {
-  expected="$1"
-  actual="$2"
+  local expected="$1"
+  local actual="$2"
   if [ "${expected}" = "${actual}" ]; then
     return 0
   fi
