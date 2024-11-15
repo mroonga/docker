@@ -34,11 +34,19 @@ function assert() {
   return 1
 }
 
+function cleanup() {
+  sudo docker container stop "${container_name}"
+  sudo docker container logs "${container_name}"
+  sudo docker container rm "${container_name}"
+}
+
+trap cleanup EXIT
 sudo docker container run \
   -d \
   -e MYSQL_ALLOW_EMPTY_PASSWORD=yes \
   --name $container_name \
   $image_name
+
 ### Should test.
 while true ; do
   docker container exec "${container_name}" mysqladmin -uroot ping && break
@@ -51,24 +59,15 @@ for i in {1..30}; do
   sleep 1
 done
 
-set +e
-echo -e "$(run_sql "SELECT JSON_PRETTY(mroonga_command('status'))")" && \
 assert \
   "\"${groonga_version}\"" \
-  "$(run_sql "SELECT JSON_EXTRACT(mroonga_command('status'), '$.version')")" && \
+  "$(run_sql "SELECT JSON_EXTRACT(mroonga_command('status'), '$.version')")"
 assert \
-  "mroonga_libgroonga_version ${groonga_version}" \
-  "$(run_sql "SHOW VARIABLES LIKE 'mroonga_libgroonga_version'")" && \
+  "mroonga_libgroonga_version	${groonga_version}" \
+  "$(run_sql "SHOW VARIABLES LIKE 'mroonga_libgroonga_version'")"
 assert \
- "mroonga_version ${mroonga_version}" \
-  "$(run_sql "SHOW VARIABLES LIKE 'mroonga_version'")" && \
+ "mroonga_version	${mroonga_version}" \
+  "$(run_sql "SHOW VARIABLES LIKE 'mroonga_version'")"
 assert \
-  "version ${mysql_version}" \
+  "version	${mysql_version}" \
   "$(run_sql "SHOW VARIABLES LIKE 'version'")"
-success=$?
-
-set -e
-sudo docker container stop $container_name
-sudo docker container logs $container_name
-sudo docker container rm $container_name
-exit $success
