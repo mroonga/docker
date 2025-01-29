@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - add-support-mysql-8.4-base-image
     tags:
       - "*"
   pull_request:
