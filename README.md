@@ -212,8 +212,7 @@ $ ./test.sh mysql-8.0 mysql80-mroonga
 ## How to release
 
 ```shell
-$ ./update.sh ${MYSQL_VERSION} ${MROONGA_VERSION} ${GROONGA_VERSION}
-(./update.sh 8.0.30 12.06 12.0.6)
+$ ./update.sh
 $ git push
 $ git push --tags
 ```
