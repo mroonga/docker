@@ -20,16 +20,9 @@ fi
 
 for target_mysql in "${target_mysqls[@]}"; do
   docker_file="mysql-${target_mysql}/Dockerfile"
-  case $target_mysql in
-    8.0)
-      mysql_version=$(curl https://raw.githubusercontent.com/docker-library/mysql/refs/heads/master/versions.json \
-                        | jq -r '.["8.0"]["version"]')
-      ;;
-    8.4)
-      mysql_version=$(curl https://raw.githubusercontent.com/docker-library/mysql/refs/heads/master/versions.json \
-                        | jq -r '.["8.4"]["version"]')
-      ;;
-  esac
+    mysql_version=$(curl https://raw.githubusercontent.com/docker-library/mysql/refs/heads/master/versions.json \
+                      | jq -r ".[\"${target_mysql}\"][\"version\"]")
+
 
   ${SED} \
     -i'' \
