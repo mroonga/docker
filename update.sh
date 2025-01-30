@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [ $# != 0 ]; then
-  echo "Usage: $0"
-  exit 1
-fi
 
 target_mysqls=(
   "8.0"
