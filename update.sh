@@ -48,7 +48,6 @@ for target_mysql in "${target_mysqls[@]}"; do
 
   tag="mysql-${mysql_version}-${mroonga_version}"
   message="MySQL ${mysql_version} and Mroonga ${mroonga_version}"
-  echo "${message}"
   git commit -m "${message}"
   git tag -a -m "${message}" ${tag}
 done
