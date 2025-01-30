@@ -31,6 +31,13 @@ If your /path/to/datadir doesn't have ibdata1, container decides to re-initializ
 Currently, groonga/mroonga provides these couples of versions.
 ([tags](https://hub.docker.com/r/groonga/mroonga/tags/) cannot display all of them..)
 
+### For MySQL 8.4
+
+| tag                    | MySQL  | Mroonga | Groonga |
+|------------------------|--------|---------|---------|
+| mysql-8.4-latest       | 8.4.4  | 14.13   | 14.1.3  |
+| mysql-8.4.4-14.13      | 8.4.4  | 14.13   | 14.1.3  |
+
 ### For MySQL 8.0
 
 | tag                    | MySQL  | Mroonga | Groonga |
