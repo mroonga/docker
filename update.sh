@@ -20,7 +20,6 @@ fi
 
 for target_mysql in "${target_mysqls[@]}"; do
   docker_file="mysql-${target_mysql}/Dockerfile"
-
   mysql_version=$(curl https://raw.githubusercontent.com/docker-library/mysql/refs/heads/master/versions.json \
                     | jq -r ".[\"${target_mysql}\"][\"version\"]")
 
