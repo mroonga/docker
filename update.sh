@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -eux
-
 if [ $# != 0 ]; then
   echo "Usage: $0"
   exit 1
