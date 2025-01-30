@@ -2,7 +2,7 @@
 
 set -eu
 
-target_mysql-versions=(
+target_mysqls=(
   "8.0"
   "8.4"
 )
@@ -18,15 +18,15 @@ else
   SED=sed
 fi
 
-for target_mysql_version in "${target_mysql-versions[@]}"; do
-  case $target_mysql_version in
+for target_mysql in "${target_mysqls[@]}"; do
+  case $target_mysql in
     8.0)
-      mysql_correct_version=$(curl https://raw.githubusercontent.com/docker-library/mysql/refs/heads/master/versions.json \
+      mysql_version=$(curl https://raw.githubusercontent.com/docker-library/mysql/refs/heads/master/versions.json \
                         | jq -r '.["8.0"]["version"]')
       docker_file=mysql-8.0/Dockerfile
       ;;
     8.4)
-      mysql_correct_version=$(curl https://raw.githubusercontent.com/docker-library/mysql/refs/heads/master/versions.json \
+      mysql_version=$(curl https://raw.githubusercontent.com/docker-library/mysql/refs/heads/master/versions.json \
                         | jq -r '.["8.4"]["version"]')
       docker_file=mysql-8.4/Dockerfile
       ;;
@@ -35,20 +35,20 @@ for target_mysql_version in "${target_mysql-versions[@]}"; do
   ${SED} \
     -i'' \
     -r \
-    -e "s/mysql:[0-9.]*/mysql:${mysql_correct_version}/g" \
+    -e "s/mysql:[0-9.]*/mysql:${mysql_version}/g" \
     -e "s/mroonga_version=[0-9.]*/mroonga_version=${mroonga_version}/g" \
     -e "s/groonga_version=[0-9.]*/groonga_version=${groonga_version}/g" \
     ${docker_file}
   git add ${docker_file}
 
   ruby "$(dirname "$0")/update-tag-list.rb" \
-       "${mysql_correct_version}" \
+       "${mysql_version}" \
        "${mroonga_version}" \
        "${groonga_version}"
   git add README.md
 
-  tag="mysql-${mysql_correct_version}-${mroonga_version}"
-  message="MySQL ${mysql_correct_version} and Mroonga ${mroonga_version}"
+  tag="mysql-${mysql_version}-${mroonga_version}"
+  message="MySQL ${mysql_version} and Mroonga ${mroonga_version}"
   echo "${message}"
   git commit -m "${message}"
   git tag -a -m "${message}" ${tag}
