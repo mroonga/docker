@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -eu
 
 target_mysqls=(
   "8.0"
