@@ -8,8 +8,8 @@ FROM mysql:8.4.4-oraclelinux9
 # error: failed to parse public key for /var/cache/yum/metadata/apache-arrow-almalinux-9-x86_64/RPM-GPG-KEY-Apache-Arrow
 # ```
 
-ENV groonga_version=15.0.0 \
-    mroonga_version=15.00
+ENV groonga_version=15.0.4 \
+    mroonga_version=15.04
 
 RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/default-auth-override.cnf && \
