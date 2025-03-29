@@ -75,7 +75,7 @@ jobs:
           cat <<RELEASE_NOTE | tee release-note.md
           * Commit: https://github.com/${GITHUB_REPOSITORY}/tree/${GITHUB_REF_NAME}
           * Tags: ${{ steps.parse.outputs.tags }}
-          * Digest: `${{ steps.docker_build.outputs.digest }}`
+          * Digest: \`${{ steps.docker_build.outputs.digest }}\`
           RELEASE_NOTE
       - name: Create GitHub Release
         if: github.ref_type == 'tag'
