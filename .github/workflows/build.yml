@@ -17,7 +17,6 @@ jobs:
           - "mysql-8.4"
     steps:
       - name: Parse ID
-        id: parse
         run: |
           set -x
           if [ "${GITHUB_REF_TYPE}" = "tag" ] && [[ "${GITHUB_REF_NAME}" =~ ^${{ matrix.id }}\. ]]; then
@@ -39,12 +38,12 @@ jobs:
           if [ "${version}" = "mysql-8.0-latest" ]; then
             tags="${tags},groonga/mroonga:latest"
           fi
-          echo "::set-output name=push::${push}"
-          echo "::set-output name=tag::${tag}"
-          echo "::set-output name=tags::${tags}"
+          echo "PUSH=${push}" >> ${GITHUB_ENV}
+          echo "TAG=${tag}" >> ${GITHUB_ENV}
+          echo "TAGS=${tags}" >> ${GITHUB_ENV}
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3
-        if: steps.parse.outputs.push == 'true'
+        if: env.PUSH == 'true'
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
@@ -56,9 +55,9 @@ jobs:
           # cache-from: type=gha
           # cache-to: type=gha,mode=max
           context: ${{ matrix.id }}
-          push: ${{ steps.parse.outputs.push }}
-          load: ${{ steps.parse.outputs.push != 'true' }}
-          tags: ${{ steps.parse.outputs.tags }}
+          push: ${{ env.PUSH }}
+          load: ${{ env.PUSH != 'true' }}
+          tags: ${{ env.TAGS }}
       - name: Image info
         run: |
           dockerfile=${{ matrix.id }}/Dockerfile
@@ -74,7 +73,7 @@ jobs:
           echo "MySQL ${mysql_version}, Mroonga ${mroonga_version}, Groonga ${groonga_version}" | tee release-title.txt
           cat <<RELEASE_NOTE | tee release-note.md
           * Commit: https://github.com/${GITHUB_REPOSITORY}/tree/${GITHUB_REF_NAME}
-          * Tags: ${{ steps.parse.outputs.tags }}
+          * Tags: ${TAGS}
           * Digest: \`${{ steps.docker_build.outputs.digest }}\`
           RELEASE_NOTE
       - name: Create GitHub Release
@@ -90,4 +89,4 @@ jobs:
         run: |
          ./test.sh \
            "${{ matrix.id }}" \
-           "${{ steps.parse.outputs.tag }}"
+           "${TAG}"
