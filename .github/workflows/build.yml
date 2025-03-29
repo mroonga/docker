@@ -82,7 +82,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh create release "${GITHUB_REF_NAME}" \
+          gh release create "${GITHUB_REF_NAME}" \
             --discussion-category Announcements \
             --notes-file release-note.md \
             --title "$(cat release-title.txt)"
