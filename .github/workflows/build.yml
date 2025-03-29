@@ -82,7 +82,7 @@ jobs:
           * Digest: `${{ steps.docker_build.outputs.digest }}`
           RELEASE_NOTE
       - name: Create GitHub Release
-        if: github.ref_type = 'tag'
+        if: github.ref_type == 'tag'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
