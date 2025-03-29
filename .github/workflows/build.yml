@@ -65,9 +65,31 @@ jobs:
           tags: ${{ steps.parse.outputs.tags }}
       - name: Image info
         run: |
-          echo "ref: ${{ github.ref }}"
-          echo "tags: ${{ steps.parse.outputs.tags }}"
-          echo "digest: ${{ steps.docker_build.outputs.digest }}"
+          dockerfile=${{ matrix.id }}/Dockerfile
+          mysql_version=$(grep -o 'mysql:[0-9.]*' ${dockerfile} | \
+                           cut -d: -f2 | \
+                           head -n1)
+          mroonga_version=$(grep -o 'groonga_version=[0-9.]*' ${dockerfile} | \
+                             cut -d: -f2 | \
+                             head -n1)
+          groonga_version=$(grep -o 'groonga_version=[0-9.]*' ${dockerfile} | \
+                             cut -d: -f2 | \
+                             head -n1)
+          echo "MySQL ${mysql_version}, Mroonga ${mroonga_version}, Groonga ${groonga_version}" | tee release-title.txt
+          cat <<RELEASE_NOTE | tee release-note.md
+          * Commit: https://github.com/${GITHUB_REPOSITORY}/tree/${GITHUB_REF_NAME}
+          * Tags: ${{ steps.parse.outputs.tags }}
+          * Digest: `${{ steps.docker_build.outputs.digest }}`
+          RELEASE_NOTE
+      - name: Create GitHub Release
+        if: github.ref_type = 'tag'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh create release "${GITHUB_REF_NAME}" \
+            --discussion-category Announcements \
+            --notes-file release-note.md \
+            --title "$(cat release-title.txt)"
       - name: Test
         run: |
          ./test.sh \
