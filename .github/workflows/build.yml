@@ -64,11 +64,11 @@ jobs:
           mysql_version=$(grep -o 'mysql:[0-9.]*' ${dockerfile} | \
                            cut -d: -f2 | \
                            head -n1)
-          mroonga_version=$(grep -o 'groonga_version=[0-9.]*' ${dockerfile} | \
-                             cut -d: -f2 | \
+          mroonga_version=$(grep -o 'mroonga_version=[0-9.]*' ${dockerfile} | \
+                             cut -d= -f2 | \
                              head -n1)
           groonga_version=$(grep -o 'groonga_version=[0-9.]*' ${dockerfile} | \
-                             cut -d: -f2 | \
+                             cut -d= -f2 | \
                              head -n1)
           echo "MySQL ${mysql_version}, Mroonga ${mroonga_version}, Groonga ${groonga_version}" | tee release-title.txt
           cat <<RELEASE_NOTE | tee release-note.md
