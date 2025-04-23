@@ -1,4 +1,4 @@
-FROM mysql:8.0.41-oraclelinux9
+FROM mysql:8.0.42-oraclelinux9
 
 # TODO
 # Remove `--setopt=apache-arrow-almalinux.gpgcheck=0` option.
@@ -9,7 +9,7 @@ FROM mysql:8.0.41-oraclelinux9
 # ```
 
 ENV groonga_version=15.0.4 \
-    mroonga_version=15.05
+    mroonga_version=15.07
 
 RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/default-auth-override.cnf && \
@@ -33,6 +33,6 @@ RUN mkdir -p /docker-entrypoint-mroonga-initdb.d && \
       -e 's,docker_process_init_files /,docker_process_init_files /docker-entrypoint-mroonga-initdb.d/* /,g' \
       /usr/local/bin/docker-entrypoint.sh
 
-# mysql:8.0.41 image has DB in /var/lib/mysql/.
+# mysql:8.0.42 image has DB in /var/lib/mysql/.
 # This clears /var/lib/mysql/ to ensure creating a new DB on "docker run".
 VOLUME ["/var/lib/mysql"]
