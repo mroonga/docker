@@ -26,7 +26,7 @@ jobs:
           fi
 
           push=false
-          if [ "${GITHUB_EVENT_NAME}" = "push" ]; then
+          if [ "${GITHUB_EVENT_NAME}" = "push" ] && [ "${GITHUB_REPOSITORY}" = "mroonga/docker" ]; then
             push=true
             if [ "${GITHUB_REF_TYPE}" = "tag" ] && [ "${version}" != "${GITHUB_REF_NAME}" ]; then
               push=false
