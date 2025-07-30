@@ -4,16 +4,16 @@
 
 ## Quick start
 
-You can start Mroonga with an empty root password as
+You can start Mroonga with `my-secret-password` for root password as
 
 ```
 $ sudo docker container run \
   --detach \
-  --env MYSQL_ALLOW_EMPTY_PASSWORD=1 \
+  --env MYSQL_ROOT_PASSWORD=my-secret-password \
   --name mroonga \
   --rm \
   groonga/mroonga
-$ sudo docker container exec -it mroonga mysql -uroot
+$ sudo docker container exec -it mroonga mysql -uroot -p
 ```
 
 You need to specify one of the following as an environment variable:
@@ -29,7 +29,7 @@ Now, we support to mount datadir from host machine like this.
 ```
 $ sudo docker container run \
   --detach \
-  --env MYSQL_ALLOW_EMPTY_PASSWORD=1 \
+  --env MYSQL_ROOT_PASSWORD=my-secret-password \
   --name mroonga \
   --rm \
   --volume /path/to/datadir:/var/lib/mysql \
