@@ -4,27 +4,40 @@
 
 ## Quick start
 
-You can start Mroonga as
+You can start Mroonga with an empty root password as
+
 ```
-$ sudo docker container run -d groonga/mroonga
+$ sudo docker container run \
+  --detach \
+  --env MYSQL_ALLOW_EMPTY_PASSWORD=1 \
+  --name mroonga \
+  --rm \
+  groonga/mroonga
 $ mysql -h <container's ipaddr> -u root
 ```
 
-MySQL root account doesn't set any password and isn't limited by connecting host.
-(This mean root was created by "GRANT ALL ON \*.\* TO root@'%' WITH GRANT OPTION")
+You need to specify one of the following as an environment variable:
 
+- MYSQL_ROOT_PASSWORD
+- MYSQL_ALLOW_EMPTY_PASSWORD
+- MYSQL_RANDOM_ROOT_PASSWORD
 
 ## Mount host directory as Mroonga's datadir
 
 Now, we support to mount datadir from host machine like this.
 
 ```
-$ sudo docker container run -d -v /path/to/datadir:/var/lib/mysql groonga/mroonga
+$ sudo docker container run \
+  --detach \
+  --env MYSQL_ALLOW_EMPTY_PASSWORD=1 \
+  --name mroonga \
+  --rm \
+  --volume /path/to/datadir:/var/lib/mysql \
+  groonga/mroonga
 ```
 
 If your /path/to/datadir has ibdata1, container decides using datadir as is.
 If your /path/to/datadir doesn't have ibdata1, container decides to re-initialize datadir for installing Mroonga.
-
 
 ## Supported versions
 
