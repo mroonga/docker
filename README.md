@@ -13,7 +13,7 @@ $ sudo docker container run \
   --name mroonga \
   --rm \
   groonga/mroonga
-$ mysql -h <container's ipaddr> -u root
+$ sudo docker container exec -it mroonga mysql -uroot
 ```
 
 You need to specify one of the following as an environment variable:
