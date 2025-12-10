@@ -9,7 +9,7 @@ FROM mysql:8.4.7-oraclelinux9
 # ```
 
 ENV groonga_version=15.2.1 \
-    mroonga_version=15.21
+    mroonga_version=15.22
 
 RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/default-auth-override.cnf && \
