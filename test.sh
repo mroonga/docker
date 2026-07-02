@@ -4,7 +4,7 @@ set -eu
 
 if [ $# != 2 ]; then
   echo "Usage: $0 CONTEXT IMAGE_NAME"
-  echo " e.g.: $0 mysql-8.0 mysql80-mroonga"
+  echo " e.g.: $0 mysql-8.4 mysql84-mroonga"
   exit 1
 fi
 

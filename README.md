@@ -46,26 +46,28 @@ Currently, groonga/mroonga provides these couples of versions.
 
 ### For MySQL 8.4
 
-| tag                    | MySQL  | Mroonga | Groonga |
-|------------------------|--------|---------|---------|
-| mysql-8.4-latest       | 8.4.8  | 16.01   | 16.0.1  |
-| mysql-8.4.8-16.01      | 8.4.8  | 16.01   | 16.0.1  |
-| mysql-8.4.8-15.25      | 8.4.8  | 15.25   | 15.2.5  |
-| mysql-8.4.8-15.23      | 8.4.8  | 15.23   | 15.2.3  |
-| mysql-8.4.7-15.22      | 8.4.7  | 15.22   | 15.2.1  |
-| mysql-8.4.7-15.21      | 8.4.7  | 15.21   | 15.2.1  |
-| mysql-8.4.6-15.17      | 8.4.6  | 15.17   | 15.1.7  |
-| mysql-8.4.6-15.16      | 8.4.6  | 15.16   | 15.1.5  |
-| mysql-8.4.5-15.11      | 8.4.5  | 15.11   | 15.1.1  |
-| mysql-8.4.5-15.10      | 8.4.5  | 15.10   | 15.0.9  |
-| mysql-8.4.5-15.07      | 8.4.5  | 15.07   | 15.0.4  |
-| mysql-8.4.4-15.05      | 8.4.4  | 15.05   | 15.0.4  |
-| mysql-8.4.4-15.04      | 8.4.4  | 15.04   | 15.0.4  |
-| mysql-8.4.4-15.00      | 8.4.4  | 15.00   | 15.0.0  |
-| mysql-8.4.4-14.14      | 8.4.4  | 14.14   | 14.1.3  |
-| mysql-8.4.4-14.13      | 8.4.4  | 14.13   | 14.1.3  |
+| tag                      | MySQL  | Mroonga | Groonga |
+|--------------------------|--------|---------|---------|
+| mysql-8.4-latest, latest | 8.4.8  | 16.01   | 16.0.1  |
+| mysql-8.4.8-16.01        | 8.4.8  | 16.01   | 16.0.1  |
+| mysql-8.4.8-15.25        | 8.4.8  | 15.25   | 15.2.5  |
+| mysql-8.4.8-15.23        | 8.4.8  | 15.23   | 15.2.3  |
+| mysql-8.4.7-15.22        | 8.4.7  | 15.22   | 15.2.1  |
+| mysql-8.4.7-15.21        | 8.4.7  | 15.21   | 15.2.1  |
+| mysql-8.4.6-15.17        | 8.4.6  | 15.17   | 15.1.7  |
+| mysql-8.4.6-15.16        | 8.4.6  | 15.16   | 15.1.5  |
+| mysql-8.4.5-15.11        | 8.4.5  | 15.11   | 15.1.1  |
+| mysql-8.4.5-15.10        | 8.4.5  | 15.10   | 15.0.9  |
+| mysql-8.4.5-15.07        | 8.4.5  | 15.07   | 15.0.4  |
+| mysql-8.4.4-15.05        | 8.4.4  | 15.05   | 15.0.4  |
+| mysql-8.4.4-15.04        | 8.4.4  | 15.04   | 15.0.4  |
+| mysql-8.4.4-15.00        | 8.4.4  | 15.00   | 15.0.0  |
+| mysql-8.4.4-14.14        | 8.4.4  | 14.14   | 14.1.3  |
+| mysql-8.4.4-14.13        | 8.4.4  | 14.13   | 14.1.3  |
 
 ### For MySQL 8.0
+
+EOL
 
 | tag                    | MySQL  | Mroonga | Groonga |
 |------------------------|--------|---------|---------|
@@ -113,7 +115,7 @@ EOL
 
 | tag                      | MySQL  | Mroonga | Groonga |
 |--------------------------|--------|---------|---------|
-| mysql-5.7-latest, latest | 5.7.39 | 12.06   | 12.0.6  |
+| mysql-5.7-latest         | 5.7.39 | 12.06   | 12.0.6  |
 | mysql-5.7.39-12.06       | 5.7.39 | 12.06   | 12.0.6  |
 | mysql-5.7.38-12.04       | 5.7.38 | 12.04   | 12.0.4  |
 | mysql-5.7.38-12.03       | 5.7.38 | 12.03   | 12.0.3  |
@@ -232,12 +234,12 @@ EOL
 ## How to build Mroonga image
 
 Dockerfiles are located in each build context.
-For example, Dockerfile for MySQL 8.0 and Mroonga is under the `mysql-8.0` directory.
+For example, Dockerfile for MySQL 8.4 and Mroonga is under the `mysql-8.4` directory.
 
 ```shell
 $ git clone https://github.com/mroonga/docker mroonga_docker
 $ cd mroonga_docker
-$ sudo docker image build -t mysql80-mroonga mysql-8.0
+$ sudo docker image build -t mysql84-mroonga mysql-8.4
 ```
 
 ## How to test
@@ -248,7 +250,7 @@ The arguments are the build context and the image name.
 ```shell
 $ git clone https://github.com/mroonga/docker mroonga_docker
 $ cd mroonga_docker
-$ ./test.sh mysql-8.0 mysql80-mroonga
+$ ./test.sh mysql-8.4 mysql84-mroonga
 ```
 
 ## How to release
