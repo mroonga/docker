@@ -1,4 +1,4 @@
-FROM mysql:8.4.8-oraclelinux9
+FROM mysql:8.4.10-oraclelinux9
 
 # TODO
 # Remove `--setopt=apache-arrow-almalinux.gpgcheck=0` option.
@@ -8,8 +8,8 @@ FROM mysql:8.4.8-oraclelinux9
 # error: failed to parse public key for /var/cache/yum/metadata/apache-arrow-almalinux-9-x86_64/RPM-GPG-KEY-Apache-Arrow
 # ```
 
-ENV groonga_version=16.0.1 \
-    mroonga_version=16.01
+ENV groonga_version=16.0.5 \
+    mroonga_version=16.07
 
 RUN mkdir -p /etc/mysql/mysql.conf.d && \
     touch /etc/mysql/mysql.conf.d/default-auth-override.cnf && \
@@ -33,6 +33,6 @@ RUN mkdir -p /docker-entrypoint-mroonga-initdb.d && \
       -e 's,docker_process_init_files /,docker_process_init_files /docker-entrypoint-mroonga-initdb.d/* /,g' \
       /usr/local/bin/docker-entrypoint.sh
 
-# mysql:8.4.8 image has DB in /var/lib/mysql/.
+# mysql:8.4.10 image has DB in /var/lib/mysql/.
 # This clears /var/lib/mysql/ to ensure creating a new DB on "docker run".
 VOLUME ["/var/lib/mysql"]
