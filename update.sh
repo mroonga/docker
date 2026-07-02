@@ -3,7 +3,6 @@
 set -eu
 
 target_mysqls=(
-  "8.0"
   "8.4"
 )
 
