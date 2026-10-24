@@ -48,7 +48,8 @@ Currently, groonga/mroonga provides these couples of versions.
 
 | tag                      | MySQL  | Mroonga | Groonga |
 |--------------------------|--------|---------|---------|
-| mysql-8.4-latest, latest | 8.4.11 | 16.12   | 16.1.2  |
+| mysql-8.4-latest, latest | 8.4.13 | 16.15   | 16.1.4  |
+| mysql-8.4.13-16.15       | 8.4.13 | 16.15   | 16.1.4  |
 | mysql-8.4.11-16.12       | 8.4.11 | 16.12   | 16.1.2  |
 | mysql-8.4.11-16.11       | 8.4.11 | 16.11   | 16.1.0  |
 | mysql-8.4.11-16.09       | 8.4.11 | 16.09   | 16.0.9  |
