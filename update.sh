@@ -4,6 +4,7 @@ set -eu
 
 target_mysqls=(
   "8.4"
+  "9.7"
 )
 
 mroonga_version=$(curl https://api.github.com/repos/mroonga/mroonga/releases/latest \

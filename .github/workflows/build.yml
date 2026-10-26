@@ -14,6 +14,7 @@ jobs:
       matrix:
         id:
           - "mysql-8.4"
+          - "mysql-9.7"
     steps:
       - name: Parse ID
         run: |
@@ -34,7 +35,7 @@ jobs:
 
           tag="groonga/mroonga:${version}"
           tags="${tag}"
-          if [ "${version}" = "mysql-8.4-latest" ]; then
+          if [ "${version}" = "mysql-9.7-latest" ]; then
             tags="${tags},groonga/mroonga:latest"
           fi
           echo "PUSH=${push}" >> ${GITHUB_ENV}
