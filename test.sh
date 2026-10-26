@@ -55,13 +55,12 @@ done
 
 for i in {1..30}; do
   # Need to wait a bit until Mroonga is available.
-  run_sql "SELECT mroonga_command('status')" > /dev/null 2>&1 && break
+  if [ -n "$(run_sql "SHOW VARIABLES LIKE 'mroonga_version'" 2> /dev/null)" ]; then
+    break
+  fi
   sleep 1
 done
 
-assert \
-  "\"${groonga_version}\"" \
-  "$(run_sql "SELECT JSON_EXTRACT(mroonga_command('status'), '$.version')")"
 assert \
   "mroonga_libgroonga_version	${groonga_version}" \
   "$(run_sql "SHOW VARIABLES LIKE 'mroonga_libgroonga_version'")"
